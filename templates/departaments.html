@@ -16,8 +16,16 @@
 	<tr>
 		<td>{{ departament[0] }}</td>
 		<td>{{ departament[1] }}</td>
-		<td>{{ departament[2] }}</td>
-		<td>{{ departament[3] }}</td>
+		<td>
+			{{ users[departament[2]].name }} {{ users[departament[2]].surname }} [{{ users[departament[2]].id }}]
+		</td>
+		<td>
+			{% if departament[3] %}
+			{{ users[departament[3]].name }} {{ users[departament[3]].surname }} [{{ users[departament[3]].id }}]
+			{% else %}
+			-
+			{% endif %}
+		</td>
 	</tr>
 {% endfor %}
 </table> 

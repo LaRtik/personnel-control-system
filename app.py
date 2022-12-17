@@ -73,11 +73,11 @@ class User():
 
 
 
-#current_user = None
+current_user = None
 #current_user = User(db.login(email = "i.lazuk@bk.ru", password = "1234"))
 
 # temp data
-current_user = User(db.login(email = "alex_filatov@mycompany.com", password = "123")) 
+# current_user = User(db.login(email = "alex_filatov@mycompany.com", password = "123")) 
 users = None
 # temp data
 
@@ -222,15 +222,14 @@ def profile(id: int):
 	id = int(id)
 	if not current_user:
 		return redirect(url_for("index"))
-	if not current_user.can_view_profiles:
+	if not current_user.can_view_profiles and current_user.id != id:
 		return redirect(url_for('index'))
 	if current_user.access_level < users[id].access_level:
 		return redirect(url_for("index")) 
 	logs = None
-	if current_user.can_register_activities:
+	activities = None
+	if current_user.can_register_activities or current_user.id == id:
 		logs = db.get_user_logs(id)
-	activities = None 
-	if current_user.can_register_activities:
 		activities = db.get_user_activities(id)
 	return render_template("profile.html", user = current_user, _user = users[id], logs = logs, users = users, activities=activities)
 
