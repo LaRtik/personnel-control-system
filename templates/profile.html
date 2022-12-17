@@ -2,24 +2,84 @@
 {% block title %}Profile page{% endblock %}
 {% block content %}
 <body>
-	<h1>{{ user.name }} {{ user.surname }} [ {{ user.id }} ] </h1>
-	<h2>{{ user.email }}</h2>
-	<h3> Access level: {{ user.access_level }}</h3>
-	<h3> Position: {{ user.position_id }}</h3>
-	<h4>Date of birth: {{ user.date_of_birth }} </h4>
-	<h4>Personal link: {{ user.personal_link }} </h4>
-	<h4>City: {{ user.city }}</h4>
-	<h4>Additional info: {{ user.additional_info }}</h4>
-	<h4>Activity points: {{ user.acitivity_points }}</h4>
-	<h4>Last promotion date: {{ user.last_promotion_date }}</h4>
-	<h4>Hire date: {{ user.hire_date }} </h4>
-	<h4>Fire date: {{ user.fire_date }} </h4>
-	<h4>Fire reason: {{ user.fire_reason }} </h4>
-	<h4>Archived: {{ user.archived }} </h4>
-	<h4>Can hire: {{ user.can_hire }} </h4>
-	<h4>Can promote: {{ user.can_promote }} </h4>
-	<h4>Can fire: {{ user.can_fire }} </h4>
-	<h4>Departament head or deputy: {{ user.departament_head_or_dep }}</h4>
-	<h4>Can create departaments: {{ user.can_create_departaments }} </h4>
+	<h1>{{ _user.name }} {{ _user.surname }} [ {{ _user.id }} ] </h1>
+	{% if _user.id != user.id and user.access_level > _user.access_level and user.can_register_activities %}
+	<form id = "activity" method="post" action="{{ url_for('activity', id=_user.id) }}">
+		<select form="activity" name="activity_id" required>
+			<option value = "Report">Report from the employee</option>
+			<option value = "New project feature">New project feature</option>
+			<option value = "New company feature">New feature in the company system</option>
+		</select>
+		<button type="submit" form="activity">Register user activity</button>
+	</form>
+	{% endif %}
+	<h2>{{ _user.email }}</h2>
+	<h3> Access level: {{ _user.access_level }}</h3>
+	<h3> Position: {{ _user.position_id }}</h3>
+	<h4>Date of birth: {{ _user.date_of_birth }} </h4>
+	<h4>Personal link: {{ _user.personal_link }} </h4>
+	<h4>City: {{ _user.city }}</h4>
+	<h4>Additional info: {{ _user.additional_info }}</h4>
+	<h4>Activity points: {{ _user.acitivity_points }}</h4>
+	<h4>Last promotion date: {{ _user.last_promotion_date }}</h4>
+	<h4>Hire date: {{ _user.hire_date }} </h4>
+	<h4>Fire date: {{ _user.fire_date }} </h4>
+	<h4>Fire reason: {{ _user.fire_reason }} </h4>
+	<h4>Archived: {{ _user.archived }} </h4>
+	<h4>Can hire: {{ _user.can_hire }} </h4>
+	<h4>Can promote: {{ _user.can_promote }} </h4>
+	<h4>Can fire: {{ _user.can_fire }} </h4>
+	<h4>Departament head or deputy: {{ _user.departament_head_or_dep }}</h4>
+	<h4>Can create departaments: {{ _user.can_create_departaments }} </h4>
+	<h4>Can register activities: {{ _user.can_register_activities 	}} </h4>
+
+	{% if logs %}
+	<h2>Logs</h2>
+	<table>
+		<tr>
+			<th>Timestamp</th>
+			<th>Initiator user</th>
+			<th>Affected user</th>
+			<th>Description</th>  
+		</tr>
+		{% for log in logs %}
+		<tr>
+			<td>{{ log[0] }}</td>
+			<td> {{ users[log[1]].name }} {{ users[log[1]].surname }} [{{ log[1] }}]</td>
+			{% if log[2] %}
+			<td> {{ users[log[2]].name }} {{ users[log[2]].surname }} [{{ log[2] }}]</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+			<td> {{ log[3] }}</td> 
+		</tr>
+		{% endfor %}
+	</table>
+	
+	{% endif %}
+
+	{% if activities %}
+	<h2>User Activities</h2>
+	<table>
+		<tr>
+			<th>Timestamp</th>
+			<th>Activity name</th>
+			<th>Activity points</th>
+			<th>Activity description</th>
+			<th>Activity ticket description</th>  
+		</tr>
+		{% for activity in activities %}
+		<tr>
+			<td>{{ activity[0] }}</td>
+			<td>{{ activity[1] }}</td>
+			<td>{{ activity[2] }}</td>
+			<td>{{ activity[3] }}</td>
+			<td>{{ activity[4] }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	
+	{% endif %}
+
 </body>
 {% endblock %}

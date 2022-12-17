@@ -55,3 +55,9 @@ JOIN access_levels ON employees.access_level = access_levels.level
 FULL JOIN employees_projects ON employees.id = employees_projects.employee_id
 FULL JOIN tickets ON employees.id = tickets.to_id
 GROUP BY employees.id ORDER BY employees.id;
+
+
+// get all activity tickets for person 
+select id, activities.description, owner_id, tstamp, activity, points from activities_tickets
+join activities on activities_tickets.activity = activities.name
+where owner_id = 1;

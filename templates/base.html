@@ -8,7 +8,7 @@
 <body>
 	<a href="{{ url_for('index') }}">Home</a>
 	{% if user %}
-	Profile - <a href="{{ url_for('profile') }}">{{ user.name }} {{ user.surname}} [{{ user.id }}]</a>
+	Profile - <a href="{{ url_for('profile', id=user.id) }}">{{ user.name }} {{ user.surname}} [{{ user.id }}]</a>
 	<a href="{{ url_for('departaments') }}">Departaments</a>
 	<a href="{{ url_for('logout') }}">Logout</a>
 	{% else %}

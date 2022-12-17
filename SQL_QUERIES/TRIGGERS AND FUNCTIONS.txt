@@ -71,3 +71,70 @@ BEGIN
 	END IF;
 END;
 $new_departament$;
+
+
+// trigger for activities from logs
+CREATE OR REPLACE FUNCTION activities_from_logs() RETURNS trigger AS $activities_from_logs$
+	BEGIN
+		CASE NEW.type
+			WHEN 1 THEN
+				INSERT INTO activities_tickets(description, owner_id, activity)
+				SELECT 'Fired an employee', NEW.initiator_id, 'Fire';
+			WHEN 2 THEN
+				INSERT INTO activities_tickets(description, owner_id, activity)
+				SELECT 'Hired an employee', NEW.initiator_id, 'Hire';
+			WHEN 3 THEN
+				INSERT INTO activities_tickets(description, owner_id, activity)
+				SELECT 'Welcome on board', NEW.initiator_id, 'Welcome';
+			WHEN 4 THEN
+				INSERT INTO activities_tickets(description, owner_id, activity)
+				SELECT 'Ticket employee', NEW.initiator_id, 'Ticket';
+			WHEN 5 THEN
+				INSERT INTO activities_tickets(description, owner_id, activity)
+				SELECT 'New project to departament', NEW.initiator_id, 'New project';
+			WHEN 6 THEN
+				INSERT INTO activities_tickets(description, owner_id, activity)
+				SELECT 'New departament created', NEW.initiator_id, 'New departament';
+			WHEN 12 THEN
+				INSERT INTO activities_tickets(description, owner_id, activity)
+				SELECT 'Gratz! You are promoted', NEW.affected_id, 'Promotion';
+			ELSE
+		END CASE;
+		RETURN NEW;
+	END;
+$activities_from_logs$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE TRIGGER activities_from_logs
+AFTER INSERT ON logs
+FOR EACH ROW EXECUTE PROCEDURE activities_from_logs();
+
+
+
+// recalc points on activities tickets
+CREATE OR REPLACE FUNCTION recalc_points() RETURNS trigger AS $recalc_points$
+	BEGIN
+		UPDATE employees
+		SET activity_points = activity_points + (SELECT points FROM activities WHERE name = NEW.activity)
+		WHERE id = NEW.owner_id;
+		RETURN NEW;
+	END;
+$recalc_points$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER recalc_points
+AFTER INSERT ON activities_tickets
+FOR EACH ROW EXECUTE PROCEDURE recalc_points();
+
+
+
+// new activity for employee
+CREATE OR REPLACE PROCEDURE new_employee_activity(initiator_id integer, affected_id integer, activity_name text) 
+LANGUAGE plpgsql AS $new_employee_activity$
+BEGIN
+	INSERT INTO logs(type, initiator_id, affected_id) VALUES
+	(9, initiator_id, affected_id);
+	
+	INSERT INTO activities_tickets(description, owner_id, activity) VALUES
+	('Work process', affected_id, activity_name);
+END;
+$new_employee_activity$;

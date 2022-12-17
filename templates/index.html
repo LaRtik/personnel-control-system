@@ -8,6 +8,7 @@
 <table>
 	<tr>
 		<th>ID</th>
+		<th>Profile link</th>
 		<th>Name</th>
 		<th>Surname</th>
 		<th>Access level</th> 
@@ -21,8 +22,17 @@
 	</tr>
 
 	{% for _user in users.values() if _user.access_level != 0 %}
-	<tr>
-		<td>{{ _user.id }}</td>
+	<tr>	
+		<td>
+			{{ _user.id }}
+		</td>
+		<td>
+			{% if user.access_level > _user.access_level and user.can_view_profiles %}
+			<a href = "{{ url_for('profile', id=_user.id) }}">[ Profile ]</a>
+			{% else %}
+			-
+			{% endif %}
+		</td>
 		<td>{{ _user.name }}</td>
 		<td>{{ _user.surname }}</td>
 		<td>
@@ -49,6 +59,7 @@
 			</form>
 			{% endif %}
 		</td>
+	
 		
 	</tr>
 	{% endfor %}
@@ -58,6 +69,7 @@
 <table>
 	<tr>
 		<th>ID</th>
+		<th>Profile link</th>
 		<th>Name</th>
 		<th>Surname</th>
 		<th>Access level</th> 
@@ -73,6 +85,13 @@
 	{% for _user in users.values() if _user.access_level == 0 %}
 	<tr>
 		<td>{{ _user.id }}</td>
+		<td>
+			{% if user.access_level > _user.access_level %}
+			<a href = "{{ url_for('profile', id=_user.id) }}">[ Profile ]</a>
+			{% else %}
+			-
+			{% endif %}
+		</td>
 		<td>{{ _user.name }}</td>
 		<td>{{ _user.surname }}</td>
 		<td>

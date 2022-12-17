@@ -37,6 +37,8 @@ class User():
 		self.can_promote = False
 		self.can_fire = False
 		self.can_create_departaments = False
+		self.can_view_profiles = False
+		self.can_register_activities = False
 		self.set_values()
 	
 
@@ -57,8 +59,12 @@ class User():
 			self.can_hire = True
 		if 6 in permissions:
 			self.can_fire = True
+		if 10 in permissions:
+			self.can_register_activities = True
 		if 12 in permissions:
 			self.can_create_departaments = True
+		if 13 in permissions:
+			self.can_view_profiles = True
 	
 	def set_departament(self) -> None:
 		if self.access_level != 0:
@@ -140,7 +146,7 @@ def login(email = "", password = ""):
 			error = "Check your login data!"
 		else:
 			current_user = User(user_data)
-			set_users(db.employees_list)
+			set_users(db.employees_list())
 			return redirect(url_for("index"))
 
 	return render_template('login.html', email=email, password=password, error=error)
@@ -150,14 +156,6 @@ def logout():
 	global current_user
 	current_user = None
 	return redirect(url_for('login'))
-
-
-@app.route("/profile")
-def profile():
-	print(current_user)
-	if not current_user:
-		return redirect(url_for("login"))
-	return render_template("profile.html", user=current_user)
 
 
 @app.route("/hire/<user_id>")
@@ -202,7 +200,6 @@ def fire(user_id: int):
 @app.route("/departaments", methods = ["GET", "POST"])
 def departaments():
 	error = None
-	print(request.form)
 	if not current_user:
 		return redirect(url_for("index"))
 	if request.method == "POST":
@@ -214,3 +211,38 @@ def departaments():
 
 	return render_template("departaments.html", user = current_user, departaments = db.get_departaments(), users=users, error=error)
 
+
+@app.route("/ticket", methods = ["POST"])
+def ticket():
+	pass
+
+
+@app.route("/profile/<id>")
+def profile(id: int):
+	id = int(id)
+	if not current_user:
+		return redirect(url_for("index"))
+	if not current_user.can_view_profiles:
+		return redirect(url_for('index'))
+	if current_user.access_level < users[id].access_level:
+		return redirect(url_for("index")) 
+	logs = None
+	if current_user.can_register_activities:
+		logs = db.get_user_logs(id)
+	activities = None 
+	if current_user.can_register_activities:
+		activities = db.get_user_activities(id)
+	return render_template("profile.html", user = current_user, _user = users[id], logs = logs, users = users, activities=activities)
+
+@app.route("/activity/<id>", methods = ["POST"])
+def activity(id: int):
+	id = int(id)
+	if not current_user:
+		return redirect(url_for("index"))
+	if not current_user.can_register_activities:
+		return redirect(url_for('index'))
+	if current_user.access_level <= users[id].access_level:
+		return redirect(url_for("index")) 
+	db.register_activity(current_user.id, id, request.form["activity_id"])
+	return redirect(url_for('profile', id=id))
+	

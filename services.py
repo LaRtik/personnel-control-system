@@ -104,6 +104,33 @@ class Database():
 		self.__connection.commit()
 
 
+	def get_user_logs(self, id: int):
+		self._cursor.execute(f"""
+		SELECT tstamp, initiator_id, affected_id, description from logs
+		JOIN log_types ON log_types.type = logs.type
+		WHERE initiator_id = {id} or affected_id = {id}
+		ORDER BY tstamp;
+		""")
+		return self._cursor.fetchall()
+
+
+	def register_activity(self, initiator_id: int, affected_id: int, activity_name: str):
+		self._cursor.execute(f"""
+		CALL new_employee_activity({initiator_id}, {affected_id}, '{activity_name}');
+		""")
+		self.__connection.commit()
+
+	def get_user_activities(self, id: int):
+		self._cursor.execute(f"""
+		SELECT tstamp, name, points, activities.description, activities_tickets.description from activities_tickets
+		JOIN activities ON activities_tickets.activity = activities.name
+		WHERE owner_id = {id}
+		ORDER BY tstamp;
+		""")
+		return self._cursor.fetchall()
+	
+
+
 	def __test_connection(self):	
 		self._cursor.execute("SELECT * FROM employees WHERE name = 'Alex'")
 		for query in self._cursor:

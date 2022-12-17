@@ -132,7 +132,8 @@ INSERT INTO permissions (name, description) VALUES
 ('Government database', 'Access for government database'),
 ('Employees logs', 'Access for full employees logs'),
 ('Users database', 'Access for users database'),
-('New departament', 'Can create departaments');
+('New departament', 'Can create departaments'),
+('View profile', 'Can view other employees profiles');
 
 
 INSERT INTO log_types (description) VALUES
@@ -207,7 +208,10 @@ INSERT INTO access_levels_permissions (access_level, permission_id) VALUES
 (8, 8),
 (6, 12),
 (7, 12),
-(8, 12);
+(8, 12),
+(6, 10),
+(7, 10),
+(8, 10);
 
 
 INSERT INTO projects_permissions (project_id, permission_id) VALUES
