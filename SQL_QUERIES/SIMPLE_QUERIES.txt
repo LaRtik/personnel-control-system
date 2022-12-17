@@ -1,0 +1,39 @@
+// get permissions for selected access_level
+
+SELECT permission_id FROM access_levels_permissions
+WHERE access_level = 1;
+
+
+
+// get all activity_tickets for selected employee ordered by tstamp
+
+SELECT * FROM activities_tickets
+WHERE owner_id = 1 ORDER BY tstamp asc;
+
+
+
+// get employees with specific access_level
+
+SELECT * FROM employees
+WHERE access_level >= 5;
+
+
+// get employee projects
+
+SELECT * FROM employees_projects
+WHERE employee_id = 1;
+
+
+// get all employee logs
+
+SELECT * FROM logs
+WHERE affected_id = 1 or initiator_id = 1;
+
+
+
+// get all tickets to employee 
+
+SELECT * FROM tickets
+WHERE to_id = 1;
+
+

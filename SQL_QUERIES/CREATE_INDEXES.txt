@@ -1,0 +1,32 @@
+CREATE INDEX access_levels_level_index
+ON access_levels(level);
+
+CREATE INDEX access_levels_permissions_access_level_index
+ON access_levels_permissions(access_level);
+
+CREATE INDEX activities_name_required_access_level_index
+ON activities(name, required_access_level);
+
+CREATE INDEX activities_tickets_owner_id_activity_index
+ON activities_tickets(owner_id, activity);
+
+CREATE INDEX departaments_head_id_deputy_head_id_index
+ON departaments(head_id, deputy_head_id);
+
+CREATE INDEX employees_id_access_level_index
+ON employees(id, access_level);
+
+CREATE INDEX employees_projects_employee_id_index
+ON employees_projects(employee_id);
+
+CREATE INDEX log_types_type_index
+ON log_types(type);
+
+CREATE INDEX projects_departament_id_index
+ON projects(departament_id);
+
+CREATE INDEX projects_permissions_project_id_index
+ON projects_permissions(project_id);
+
+CREATE INDEX tickets_to_id_index
+ON tickets(to_id);

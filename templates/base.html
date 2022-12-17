@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+</head>
+{% if error %}
+<h1 style="color:crimson">{{ error }}</h1>
+{% endif %}
+<body>
+	<a href="{{ url_for('index') }}">Home</a>
+	{% if user %}
+	Profile - <a href="{{ url_for('profile') }}">{{ user.name }} {{ user.surname}} [{{ user.id }}]</a>
+	<a href="{{ url_for('departaments') }}">Departaments</a>
+	<a href="{{ url_for('logout') }}">Logout</a>
+	{% else %}
+	<a href="{{ url_for('register') }}">Register</a>
+	<a href="{{ url_for('login') }}">Login</a>
+	{% endif %}
+	<br><br>
+	{% block content %}
+	{% endblock %}
+</body>
+

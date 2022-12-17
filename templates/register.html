@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Register page{% endblock %}
+{% block content %}
+{% if error %}
+<h1 style="color:crimson">{{ error }}</h1>
+{% endif %}
+<form action="{{ url_for('register') }}" method="post">
+	<label for="email">Enter your email</label>
+	<input type="email" name = "email" id = "email" value="{{ request.form['email'] }}" required>
+	<br>
+	<label for="name">Enter your name</label>
+	<input type="text" name = "name" id = "name" value="{{ request.form['name'] }}"  required>
+	<br>
+	<label for="surname">Enter your surname</label>
+	<input type="text" name = "surname" id = "surname" value="{{ request.form['surname'] }}"  required>
+	<br>
+	<label for="date">Enter your date of birth</label>
+	<input type="date" name = "date" id = "date" value="{{ request.form['date'] }}"  required>
+	<br>
+	<label for="link">Enter your personal link</label>
+	<input type="url" name = "link" id = "link" value="{{ request.form['link'] }}"  required>
+	<br>
+	<label for="phone">Enter your phone number</label>
+	<input type="tel" name = "phone" id = "phone" value="{{ request.form['phone'] }}"  required>
+	<br>
+	<label for="city">Enter your city</label>
+	<input type="text" name = "city" id = "city" value="{{ request.form['city'] }}"  required>
+	<br>
+	<label for="additional">Enter your additional information</label>
+	<textarea type="text" name = "additional" id = "additional" value="{{ request.form['additional'] }}" > </textarea>
+	<br>
+	<label for="password">Enter your password</label>
+	<input type="password" name = "password" id = "password" value="{{ request.form['password'] }}" required > 
+	<br>
+	<button type="submit">Register</button>
+
+</form>
+{% endblock %}

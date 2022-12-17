@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Login page{% endblock %}
+{% block content %}
+{% if error %}
+<h1 style="color:crimson">{{ error }}</h1>
+{% endif %}
+<body>
+	<form id = "login" action=" {{ url_for('login') }}" method="post">
+		<label for="email">Enter your email</label>
+		<input type="email" autocomplete="email" name="email" id="email" required value = "{{ email }}">
+		<br>
+		<label for="password">Enter your password</label>
+		<input type="password" autocomplete="current-password" name="password" id="password" required value = "{{ password }}">
+		<br>
+		<button type="submit">Login</button>
+	</form>
+</body>
+{% endblock %}

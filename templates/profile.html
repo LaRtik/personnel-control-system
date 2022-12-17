@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Profile page{% endblock %}
+{% block content %}
+<body>
+	<h1>{{ user.name }} {{ user.surname }} [ {{ user.id }} ] </h1>
+	<h2>{{ user.email }}</h2>
+	<h3> Access level: {{ user.access_level }}</h3>
+	<h3> Position: {{ user.position_id }}</h3>
+	<h4>Date of birth: {{ user.date_of_birth }} </h4>
+	<h4>Personal link: {{ user.personal_link }} </h4>
+	<h4>City: {{ user.city }}</h4>
+	<h4>Additional info: {{ user.additional_info }}</h4>
+	<h4>Activity points: {{ user.acitivity_points }}</h4>
+	<h4>Last promotion date: {{ user.last_promotion_date }}</h4>
+	<h4>Hire date: {{ user.hire_date }} </h4>
+	<h4>Fire date: {{ user.fire_date }} </h4>
+	<h4>Fire reason: {{ user.fire_reason }} </h4>
+	<h4>Archived: {{ user.archived }} </h4>
+	<h4>Can hire: {{ user.can_hire }} </h4>
+	<h4>Can promote: {{ user.can_promote }} </h4>
+	<h4>Can fire: {{ user.can_fire }} </h4>
+	<h4>Departament head or deputy: {{ user.departament_head_or_dep }}</h4>
+	<h4>Can create departaments: {{ user.can_create_departaments }} </h4>
+</body>
+{% endblock %}

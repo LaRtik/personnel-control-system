@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}Main page{% endblock %}
+{% block content %}
+{% if not users %}
+<h1>Hello!</h1>
+{% else %}
+<h3> Users </h3>
+<table>
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+		<th>Surname</th>
+		<th>Access level</th> 
+		<th>Personal link</th>
+		<th>Phone number</th>
+		<th>Email</th>
+		<th>City</th>
+		<th>Position</th>
+		<th>Activity points</th>
+		<th>Action</th>
+	</tr>
+
+	{% for _user in users.values() if _user.access_level != 0 %}
+	<tr>
+		<td>{{ _user.id }}</td>
+		<td>{{ _user.name }}</td>
+		<td>{{ _user.surname }}</td>
+		<td>
+			{{ _user.access_level }}
+			{% if user.can_hire and _user.access_level == 0 %}
+			<a href="{{ url_for('hire', user_id=_user.id) }}">[ Hire ]</a>
+			{% elif user.can_promote and _user.access_level < user.access_level - 1 %}
+			<a href="{{ url_for('promote', user_id=_user.id) }}">[ Promote ]</a>
+			{% endif %}
+		</td>
+		<td>{{ _user.personal_link }}</td>
+		<td>{{ _user.phone_number }}</td>
+		<td>{{ _user.email }}</td>
+		<td>{{ _user.city }}</td>
+		<td>{{ _user.position_id }}</td>
+		<td>
+			{{ _user.activity_points }}
+		</td>
+		<td>
+			{% if user.can_fire and _user.access_level < user.access_level %}
+			<form id="fire" action="{{ url_for('fire', user_id = _user.id) }}" method="post">
+				<input type="text" required name="fire_reason" id="fire_reason">
+				<button type="submit">Fire</button>
+			</form>
+			{% endif %}
+		</td>
+		
+	</tr>
+	{% endfor %}
+</table>
+
+<h3> Unconfirmed users</h3>
+<table>
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+		<th>Surname</th>
+		<th>Access level</th> 
+		<th>Personal link</th>
+		<th>Phone number</th>
+		<th>Email</th>
+		<th>City</th>
+		<th>Position</th>
+		<th>Activity points</th>
+		<th>Action</th>
+	</tr>
+
+	{% for _user in users.values() if _user.access_level == 0 %}
+	<tr>
+		<td>{{ _user.id }}</td>
+		<td>{{ _user.name }}</td>
+		<td>{{ _user.surname }}</td>
+		<td>
+			{{ _user.access_level }}
+			{% if user.can_hire and _user.access_level == 0 %}
+			<a href="{{ url_for('hire', user_id=_user.id) }}">[ Hire ]</a>
+			{% elif user.can_promote and _user.access_level < user.access_level - 1 %}
+			<a href="{{ url_for('promote', user_id=_user.id) }}">[ Promote ]</a>
+			{% endif %}
+		</td>
+		<td>{{ _user.personal_link }}</td>
+		<td>{{ _user.phone_number }}</td>
+		<td>{{ _user.email }}</td>
+		<td>{{ _user.city }}</td>
+		<td>{{ _user.position_id }}</td>
+		<td>
+			{{ _user.activity_points }}
+		</td>
+		<td>
+			{% if _user.archived %}
+			<p style="color: crimson;">Archived</p>
+			{% endif %}
+		</td>
+		
+	</tr>
+	{% endfor %}
+</table>
+{% endif %}
+{% endblock %}

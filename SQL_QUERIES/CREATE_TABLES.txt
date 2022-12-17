@@ -1,0 +1,113 @@
+CREATE TABLE access_levels (
+	level serial PRIMARY KEY,
+	name text NOT NULL,
+	description text,
+	salary money NOT NULL
+);
+
+CREATE TABLE positions (
+	id serial PRIMARY KEY,
+	name text NOT NULL,
+	description text,
+	salary money NOT NULL
+);
+
+CREATE EXTENSION pgcrypto;
+
+CREATE TABLE employees (
+	id serial PRIMARY KEY,
+	name text NOT NULL,
+	surname text NOT NULL,
+	date_of_birth date NOT NULL,
+	personal_link text NOT NULL,
+	phone_number text NOT NULL,
+	email char(50) NOT NULL,
+	city char(50) NOT NULL,
+	additional_info text,
+	access_level integer DEFAULT 0 REFERENCES access_levels (level) ON DELETE SET DEFAULT,
+	position_id integer REFERENCES positions (id) ON DELETE SET NULL,
+	activity_points numeric NOT NULL DEFAULT 0.00,
+	last_promotion_date date,
+	hire_date date NOT NULL,
+	fire_date date,
+	fire_reason text,
+	archived bool NOT NULL DEFAULT false,
+	pass_hash text NOT NULL,
+);
+
+CREATE TABLE departaments (
+	id serial PRIMARY KEY,
+	name text NOT NULL,
+	head_id integer NOT NULL UNIQUE REFERENCES employees (id) ON DELETE RESTRICT,
+	deputy_head_id integer UNIQUE REFERENCES employees (id) ON DELETE RESTRICT
+);
+
+CREATE TABLE projects (
+	id serial PRIMARY KEY,
+	name text NOT NULL,
+	departament_id integer NOT NULL REFERENCES departaments (id) ON DELETE RESTRICT
+);
+
+
+CREATE TABLE activities (
+	name char(50) PRIMARY KEY,
+	points integer NOT NULL,
+	description text NOT NULL,
+	required_access_level integer NOT NULL REFERENCES access_levels(level) ON DELETE RESTRICT
+);
+
+
+CREATE TABLE activities_tickets (
+	id serial PRIMARY KEY,
+	activity char(50) NOT NULL REFERENCES activities(name) ON DELETE CASCADE,
+	description text,
+	owner_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	tstamp timestamp DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tickets (
+	id serial PRIMARY KEY,
+	from_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	to_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	salary_change money NOT NULL,
+	reason text NOT NULL,
+	tstamp timestamp DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE permissions (
+	id serial PRIMARY KEY,
+	name char(50) NOT NULL,
+	description text NOT NULL
+);
+
+CREATE TABLE log_types (
+	type serial PRIMARY KEY,
+	description text NOT NULL
+);
+
+CREATE TABLE logs (
+	id serial PRIMARY KEY,
+	type integer NOT NULL REFERENCES log_types(type) ON DELETE SET DEFAULT,
+	initiator_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	affected_id integer REFERENCES employees(id) ON DELETE CASCADE,
+	tstamp timestamp DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE employees_projects (
+	project_id integer NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+	employee_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	salary money NOT NULL,
+	CONSTRAINT employees_projects_pkey PRIMARY KEY (project_id, employee_id)
+);
+
+CREATE TABLE access_levels_permissions (
+	access_level integer NOT NULL REFERENCES access_levels(level) ON DELETE CASCADE,
+	permission_id integer NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+	CONSTRAINT access_levels_permissions_pkey PRIMARY KEY (access_level, permission_id)
+);
+
+CREATE TABLE projects_permissions (
+	project_id integer NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+	permission_id integer NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+	CONSTRAINT projects_permissions_pkey PRIMARY KEY (project_id, permission_id)
+);

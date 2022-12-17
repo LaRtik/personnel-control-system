@@ -1,0 +1,298 @@
+INSERT INTO access_levels (level, name, description, salary) VALUES 
+(0, 'No level', 'Base access level, witch is granted just after registration', 0,00),
+(1, 'Trainee', 'Trainee developer with base permissions', 250),
+(2, 'Junior', 'More expirienced, than trainee', 500),
+(3, 'Middle', 'Can be a deputy in departament', 1500),
+(4, 'Senior', 'Can be a head of departament', 3000),
+(5, 'Senior leader', 'Controls several departaments', 4000),
+(6, 'Deputy Manager', 'Controls the processes in the company. Can employ new Trainees and promote them', 6000),
+(7, 'Manager', 'Have full control of the company', 10000),
+(8, 'Director', 'Full control of the organization', 15000);
+
+
+
+INSERT INTO permissions (id, name, description) VALUES 
+(1, 'Git push', 'Can push changes to the git'),
+(2, 'Code review', 'Can participate in code reviews'),
+(3, 'Chat', 'Can use project chat'),
+(4, 'Promote', 'Can promote other employees'),
+(5, 'Hire', 'Can promote other persons'),
+(6, 'Fire', 'Can fire other employees'),
+(7, 'Invite to the departament', 'Can add other employees to the departament'),
+(8, 'New project', 'Can add new project');
+
+
+INSERT INTO activities (name, points, description, required_access_level) VALUES
+('Hire', 100, 'Hire new person', 6),
+('Promote', 50, 'Promote the employee', 6),
+('Fire', 50, 'Fire the employee', 5),
+('Ticket', 30, 'Ticket the employee', 5),
+('Report', 10, 'Report from the employee', 1),
+('New project feature', 15, 'New feature in the project', 3),
+('New company feature', 150, 'New feature in the company system', 4),
+('New project', 100, 'New project created', 4),
+('New departament', 200, 'New departament created', 5),
+('Welcome', 5, 'When employee is promoted from 0 to 1 level', 0),
+('Promotion', 25, 'When employee is promoted (level 1 and higher)', 1);
+
+
+INSERT INTO positions (id, name, description, salary) VALUES 
+(1, 'Back-end developer', 'Develops server-side logic', 520),
+(2, 'Front-end develeoper', 'Develops UI logic', 400),
+(3, 'DevOps Engineer', 'From developers to production', 550),
+(4, 'Data Engineer', 'Process raw data', 510),
+(5, 'Machine-Learning Engineer', 'Trains neural networks with data', 600),
+(6, 'Mobile developer', 'Creates Anroid / iOS application', 500),
+(7, 'Secity Engineer', 'Creates infrastructure for security development', 550),
+(8, 'UI Artist', 'Designs the UI', 450);
+
+
+INSERT INTO employees (id, name, surname, date_of_birth, personal_link, phone_number, email, city, additional_info, access_level, position_id, activity_points, last_promotion_date, hire_date, fire_date, fire_reason, archived) VALUES
+(1, 'Alex', 'Filatov', '2001-09-11', 'mylink.com/afilatov', '78989899888', 'alex_filatov@mycompany.com', 'Los Angeles', NULL, 7, 1, 0.00, '2020-04-01', '2020-04-01', NULL, NULL, false),
+(2, 'Martin', 'DeSanta', '2002-07-03', 'mylink.com/mdesanta', '78989899889', 'martin_desanta@mycompany.com', 'Sacramento', NULL, 5, 1, 0.00, '2022-01-06', '2020-09-08', NULL, NULL, false),
+(3, 'Bryan', 'Stoks', '2003-01-11', 'mylink.com/bstoks', '78989899810', 'bryan_stoks@mycompany.com', 'San Francisco', NULL, 5, 1, 0.00, '2022-01-06', '2021-01-08', NULL, NULL, false),
+(4, 'Jimmy', 'Bonhart', '2001-01-01', 'mylink.com/jbonhart', '78989837489', 'jimmy_bonhart@mycompany.com', 'Los Angeles', NULL, 4, 7, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
+(5, 'Alex', 'Liquid', '2001-01-01', 'mylink.com/aliquid', '78989834489', 'alex_liquid@mycompany.com', 'Los Angeles', NULL, 4, 6, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
+(6, 'Avangard', 'Wallace', '2001-01-01', 'mylink.com/awallace', '78987837489', 'avangard_wallace@mycompany.com', 'Los Angeles', NULL, 4, 5, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
+(7, 'Maksim', 'Wallace', '2001-01-01', 'mylink.com/mwallace', '88989837489', 'maksim_wallace@mycompany.com', 'Kiev', NULL, 4, 1, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
+(8, 'Sebastian', 'Devis', '2001-01-01', 'mylink.com/sdevis', '78779837489', 'sebastian_devis@mycompany.com', 'Moscow', NULL, 4, 4, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
+(9, 'Dorian', 'Rouse', '2001-01-01', 'mylink.com/drouse', '78989837779', 'dorian_rouse@mycompany.com', 'Moscow', NULL, 3, 3, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
+(10, 'Logan', 'Cornello', '2001-01-01', 'mylink.com/lcornello', '78989837777', 'logan_cornello@mycompany.com', 'Kiev', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
+(11, 'Arhont', 'Sherwood', '2001-01-01', 'mylink.com/asherwood', '77789837779', 'arhont_sherwood@mycompany.com', 'Los Angeles', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
+(12, 'Martin', 'Hennessy', '2001-01-01', 'mylink.com/mhennessy', '78989834479', 'martin_hennessy@mycompany.com', 'Moscow', NULL, 2, 7, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false),
+(13, 'Samuel', 'Morrisson', '2001-01-01', 'mylink.com/smorrisson', '78984434479', 'samuel_morrisson@mycompany.com', 'Moscow', NULL, 2, 8, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false),
+(14, 'Cody', 'Biden', '2001-01-01', 'mylink.com/cbiden', '78989834444', 'cody_biden@mycompany.com', 'Los Angeles', NULL, 2, 5, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false),
+(15, 'William', 'Broun', '2001-01-01', 'mylink.com/wbroun', '78944834479', 'william_broun@mycompany.com', 'Moscow', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false),
+(16, 'Vissarion', 'Chicago', '2001-01-01', 'mylink.com/vchicago', '78944434479', 'vissarion_chicago@mycompany.com', 'Moscow', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false),
+(17, 'Tea', 'Chicago', '2001-01-01', 'mylink.com/tchicago', '74444834479', 'tea_chicago@mycompany.com', 'Moscow', NULL, 1, 8, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false),
+(0, 'Sam', 'Mason', '1999-01-01', 'mylink.com/smason', '78789798789', 'sam_mason@mycompany.com', 'San Francisco', NULL, 8, 1, 0.00, '2019-04-01', '2019-04-01', NULL, NULL, false);
+
+
+INSERT INTO activities_tickets (activity, description, owner_id) VALUES
+('Hire', 'Hired new person', 0),
+('Hire', 'Hired new person', 1),
+('Hire', 'Hired new person', 1),
+('Hire', 'Hired new person', 1),
+('Hire', 'Hired new person', 1),
+('Hire', 'Hired new person', 1),
+('Hire', 'Hired new person', 1),
+('Hire', 'Hired new person', 1),
+('Hire', 'Hired new person', 1),
+('Hire', 'Hired new person', 1),
+('Hire', 'Hired new person', 1),
+('New company feature', 'Personnel Conrtol System', 2),
+('New project', 'Techinal support web', 2),
+('Report', 'New report from the employee', 1),
+('Report', 'New report from the employee', 2),
+('Report', 'New report from the employee', 3),
+('Report', 'New report from the employee', 4),
+('Report', 'New report from the employee', 5),
+('Report', 'New report from the employee', 6),
+('Report', 'New report from the employee', 7),
+('Report', 'New report from the employee', 8),
+('Report', 'New report from the employee', 9),
+('Report', 'New report from the employee', 10),
+('Report', 'New report from the employee', 11),
+('Report', 'New report from the employee', 12),
+('Report', 'New report from the employee', 13),
+('Report', 'New report from the employee', 14),
+('Report', 'New report from the employee', 15),
+('Report', 'New report from the employee', 16),
+('Report', 'New report from the employee', 17)
+
+
+INSERT INTO departaments (id, name, head_id, deputy_head_id) VALUES
+(1, 'General departament', 0, 1),
+(2, 'Techical support departament', 2, 8),
+(3, 'Government projects departament', 3, 4);
+
+
+INSERT INTO projects (id, name, departament_id) VALUES
+(1, 'HR web-platform', 1),
+(2, 'User support web-platform', 2),
+(3, 'Government tax web-platform', 3);
+
+
+
+INSERT INTO tickets (from_id, to_id, salary_change, reason) VALUES
+(0, 1, -30, 'Late with the report'),
+(1, 2, 30, 'New system implemented faster than expected'),
+(1, 3, 15, 'Help with report checking');
+
+
+INSERT INTO permissions (name, description) VALUES
+('Git push', 'Can push changes to the git'),
+('Code review', 'Can participate in code reviews'),
+('Chat', 'Can use project chat'),
+('Promote', 'Can promote other employees'),
+('Hire', 'Can promote other persons'),
+('Fire', 'Can fire other employees'),
+('Invite to the departament', 'Can add other employees to the departament'),
+('New project', 'Can add new project'),
+('Government database', 'Access for government database'),
+('Employees logs', 'Access for full employees logs'),
+('Users database', 'Access for users database'),
+('New departament', 'Can create departaments');
+
+
+INSERT INTO log_types (description) VALUES
+('Fire employee'),
+('Hire employee'),
+('Registered'),
+('Ticket to employee'),
+('New project to departament'),
+('New departament'),
+('New head of departament'),
+('New deputy head of departament'),
+('New activity ticket'),
+('Add new activity'),
+('New permission added'),
+('Promote the employee');
+
+
+INSERT INTO employees_projects (project_id, employee_id, salary)
+SELECT 1, id, 100 FROM employees
+WHERE access_level < 3;
+
+
+INSERT INTO employees_projects (project_id, employee_id, salary)
+SELECT 3, id, 300 FROM employees
+WHERE access_level = 4;
+
+
+INSERT INTO employees_projects (project_id, employee_id, salary)
+SELECT 2, id, 200 FROM employees
+WHERE access_level = 2;
+
+
+INSERT INTO access_levels_permissions (access_level, permission_id) VALUES
+(1, 3),
+(2, 3),
+(3, 1),
+(3, 2),
+(3, 3),
+(4, 1),
+(4, 2),
+(4, 3),
+(4, 8),
+(5, 1),
+(5, 2),
+(5, 3),
+(5, 6),
+(5, 7),
+(5, 8),
+(6, 1),
+(6, 2),
+(6, 3),
+(6, 4),
+(6, 5),
+(6, 6),
+(6, 7),
+(6, 8),
+(7, 1),
+(7, 2),
+(7, 3),
+(7, 4),
+(7, 5),
+(7, 6),
+(7, 7),
+(7, 8),
+(8, 1),
+(8, 2),
+(8, 3),
+(8, 4),
+(8, 5),
+(8, 6),
+(8, 7),
+(8, 8),
+(6, 12),
+(7, 12),
+(8, 12);
+
+
+INSERT INTO projects_permissions (project_id, permission_id) VALUES
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 10),
+(2, 11),
+(3, 9);
+
+
+INSERT INTO logs(type,initiator_id,affected_id) VALUES
+(3, 0, null),
+(3, 1, null),
+(2, 0, 1);
+
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 3, id, null FROM employees
+WHERE id > 1;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 2, 1,id FROM employees
+WHERE id > 1;
+
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 1;
+
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 2;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 2;
+
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 3;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 3;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 3;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 4;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 4;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 4;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 4;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 5;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 5;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 5;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 5;
+
+INSERT INTO logs(type,initiator_id,affected_id)
+SELECT 12,1,id FROM employees
+WHERE access_level = 5;

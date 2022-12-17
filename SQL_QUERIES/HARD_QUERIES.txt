@@ -1,0 +1,57 @@
+// get all user permissions from project
+
+SELECT permission_id, description FROM projects_permissions, employees_projects, permissions
+WHERE employees_projects.project_id = projects_permissions.project_id AND employees_projects.employee_id = 12
+AND projects_permissions.permission_id = permissions.id;
+
+
+// get all employee permissions from access_level
+
+SELECT DISTINCT permission_id, description FROM access_levels_permissions, permissions, employees
+WHERE access_levels_permissions.access_level = (SELECT access_level FROM employees WHERE id = 12)
+AND access_levels_permissions.permission_id = permissions.id
+ORDER BY permission_id ASC;
+
+
+// get all logs for employee with log description
+
+SELECT logs.type, log_types.description, logs.initiator_id, logs.affected_id from logs, log_types
+WHERE affected_id = 3 AND logs.type = log_types.type;
+
+
+// get all user permissions
+
+SELECT permission_id, description FROM projects_permissions, employees_projects, permissions
+WHERE employees_projects.project_id = projects_permissions.project_id AND employees_projects.employee_id = 12
+AND projects_permissions.permission_id = permissions.id
+UNION
+SELECT DISTINCT permission_id, description FROM access_levels_permissions, permissions, employees
+WHERE access_levels_permissions.access_level = (SELECT access_level FROM employees WHERE id = 12)
+AND access_levels_permissions.permission_id = permissions.id
+ORDER BY permission_id ASC;
+
+
+
+// get departaments employees
+
+SELECT departament_id, COUNT(departament_id) as number_of_employees FROM employees_projects, projects
+WHERE employees_projects.project_id = projects.id
+GROUP BY departament_id;
+
+
+// get departaments where employees > 3
+
+SELECT departament_id, COUNT(departament_id) as number_of_employees FROM employees_projects, projects
+WHERE employees_projects.project_id = projects.id
+GROUP BY departament_id
+HAVING COUNT(departament_id) > 3
+
+
+
+// get full salary
+
+SELECT employees.id, employees.name, employees.surname, SUM(access_levels.salary) as base_salary, SUM(employees_projects.salary) projects_salary, SUM(tickets.salary_change) as tickets_salary_change, COALESCE(SUM(access_levels.salary), SUM(employees_projects.salary), SUM(tickets.salary_change)) as total_salary FROM employees
+JOIN access_levels ON employees.access_level = access_levels.level
+FULL JOIN employees_projects ON employees.id = employees_projects.employee_id
+FULL JOIN tickets ON employees.id = tickets.to_id
+GROUP BY employees.id ORDER BY employees.id;

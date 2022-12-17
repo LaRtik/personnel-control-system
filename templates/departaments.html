@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Departaments page{% endblock %}
+{% block content %}
+{% if error %}
+<h1 style="color:crimson">{{ error }}</h1>
+{% endif %}
+<h1> Departaments</h1>
+<table>
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th>Head of departament</th>
+	<th>Deputy head of departament</th> 
+</tr>
+{% for departament in departaments %}
+	<tr>
+		<td>{{ departament[0] }}</td>
+		<td>{{ departament[1] }}</td>
+		<td>{{ departament[2] }}</td>
+		<td>{{ departament[3] }}</td>
+	</tr>
+{% endfor %}
+</table> 
+
+{% if user.can_create_departaments %}
+<h3>Add new departament</h3>
+<form id = "new_departament" action="{{ url_for('departaments') }}" method="post">
+	<label for="dep_name">Enter departament name: </label>
+	<input name = "dep_name" id = "dep_name" type="text" required>
+	<br>
+	<label for="dep_head">Select departament head: </label>
+	<select form="new_departament" name="dep_head" required>
+		{% for _user in users.values() %}
+		{% if not _user.departament_head_or_dep and _user.access_level > 0 %}
+		<option value = "{{ _user.id }}" > {{ _user.name }} {{ _user.surname }} [{{ _user.id }}]</option>
+		{% endif %}
+		{% endfor %}
+	</select>
+	<br>
+	<label for="dep_deputy">Select departament head: </label>
+	<select form="new_departament" name="dep_deputy">
+		<option value = "-1">------</option>
+		{% for _user in users.values() %}
+		{% if not _user.departament_head_or_dep and _user.access_level > 0 %}
+		<option value = "{{ _user.id }}" > {{ _user.name }} {{ _user.surname }} [{{ _user.id }}]</option>
+		{% endif %}
+		{% endfor %}
+	</select>
+	<br>
+	<button type="submit" form="new_departament" formmethod="post">Add new departament</button>
+</form>
+{% endif %}
+{% endblock %}

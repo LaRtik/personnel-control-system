@@ -1,0 +1,73 @@
+// trigger registered
+CREATE OR REPLACE FUNCTION employee_registered() RETURNS trigger AS $employee_registered$
+	BEGIN
+		INSERT INTO logs(type, initiator_id) SELECT 3, NEW.id;
+		RETURN NEW;
+	END;
+$employee_registered$ LANGUAGE plpgsql;
+
+CREATE TRIGGER employee_registered
+AFTER INSERT ON employees
+FOR EACH ROW EXECUTE PROCEDURE employee_registered();
+
+
+
+// hire employee
+CREATE OR REPLACE PROCEDURE employee_hired(initiator_id integer, affected_id integer) 
+LANGUAGE SQL AS $employee_hired$
+	UPDATE employees
+	SET access_level = 1
+	WHERE id = affected_id;
+	
+	INSERT INTO logs(type, initiator_id, affected_id) VALUES
+	(2, initiator_id, affected_id);
+$employee_hired$;
+
+
+// promote employee
+CREATE OR REPLACE PROCEDURE employee_promoted(initiator_id integer, affected_id integer) 
+LANGUAGE SQL AS $employee_promoted$
+	UPDATE employees
+	SET access_level = access_level + 1
+	WHERE id = affected_id;
+	
+	INSERT INTO logs(type, initiator_id, affected_id) VALUES
+	(12, initiator_id, affected_id);
+$employee_promoted$;
+
+
+// fire employee
+CREATE OR REPLACE PROCEDURE employee_fired(initiator_id integer, affected_id integer, reason text) 
+LANGUAGE SQL AS $employee_fired$
+	UPDATE employees
+	SET access_level = 0, position_id = null, fire_date = CURRENT_TIMESTAMP, fire_reason = reason, archived = true
+	WHERE id = affected_id;
+	
+	INSERT INTO logs(type, initiator_id, affected_id) VALUES
+	(1, initiator_id, affected_id);
+$employee_fired$;
+
+
+
+// new departament
+CREATE OR REPLACE PROCEDURE new_departament(initiator_id integer, name text, head_id integer, deputy_head_id integer) 
+LANGUAGE plpgsql AS $new_departament$
+BEGIN
+	IF (deputy_head_id = -1) THEN
+		INSERT INTO departaments(name, head_id) VALUES
+		(name, head_id);
+		
+		INSERT INTO logs(type, initiator_id, affected_id) VALUES
+		(6, initiator_id, null),
+		(7, initiator_id, head_id);
+	ELSE
+		INSERT INTO departaments(name, head_id, deputy_head_id) VALUES
+		(name, head_id, deputy_head_id);
+		
+		INSERT INTO logs(type, initiator_id, affected_id) VALUES
+		(6, initiator_id, null),
+		(7, initiator_id, head_id),
+		(8, initiator_id, deputy_head_id);
+	END IF;
+END;
+$new_departament$;
