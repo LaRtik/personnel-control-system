@@ -245,7 +245,7 @@ def activity(id: int):
 	return redirect(url_for('profile', id=id))
 	
 
-@app.route("/goals", ["GET", "POST"])
+@app.route("/goals", methods=["GET", "POST"])
 def goals():
 	if not current_user:
 		return redirect(url_for("index"))
