@@ -3,7 +3,7 @@ import psycopg2
 
 class Database():
 	def __init__(self) -> None:
-		self.__connection = psycopg2.connect(host = "localhost", database = "personnelcontrol", user = "postgres", password = "123")
+		self.__connection = psycopg2.connect(host = "localhost", database = "personnelcontrol", user = "personneladmin", password = "123")
 		self._cursor = self.__connection.cursor()
 		#self.__test_connection()
 
@@ -49,8 +49,15 @@ class Database():
 		ORDER BY access_level desc;
 		""")
 		return self._cursor.fetchall()
-
 	
+	def employees_sensitive_info_list(self) -> bool:
+		self._cursor.execute(f"""
+		SELECT * from sensitive_employees_personal_info
+		ORDER BY employee_id desc;
+		""")
+		return self._cursor.fetchall()
+
+
 	def get_permissions_list(self, id: int) -> tuple:
 		self._cursor.execute(f"""
 		SELECT permission_id FROM projects_permissions, employees_projects, permissions
@@ -128,7 +135,19 @@ class Database():
 		ORDER BY tstamp;
 		""")
 		return self._cursor.fetchall()
+
+
+	def get_goals(self):
+		self._cursor.execute(f"""
+		SELECT * FROM goals
+		""")
+		return self._cursor.fetchall()
 	
+	def get_goals_types(self):
+		self._cursor.execute(f"""
+		SELECT * FROM goals_types
+		""")
+		return self._cursor.fetchall()
 
 
 	def __test_connection(self):	

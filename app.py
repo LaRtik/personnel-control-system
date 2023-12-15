@@ -14,24 +14,25 @@ db = Database()
 # - update users list only on good responses
  
 class User():
-	def __init__(self, user_data) -> None:
+	def __init__(self, user_data, users_secrets) -> None:
+		self.date_of_birth = users_secrets[1]
+		self.city = users_secrets[2]
+		self.phone_number = users_secrets[3]
+
 		self.id = user_data[0]
 		self.name = user_data[1]
 		self.surname = user_data[2]
-		self.date_of_birth = user_data[3]
-		self.personal_link = user_data[4]
-		self.phone_number = user_data[5]
-		self.email = user_data[6]
-		self.city = user_data[7]
-		self.additional_info = user_data[8]
-		self.access_level = user_data[9]
-		self.position_id = user_data[10]
-		self.activity_points = user_data[11]
-		self.last_promotion_date = user_data[12]
-		self.hire_date = user_data[13]
-		self.fire_date = user_data[14]
-		self.fire_reason = user_data[15]
-		self.archived = user_data[16]
+		self.personal_link = user_data[3]
+		self.email = user_data[4]
+		self.additional_info = user_data[5]
+		self.access_level = user_data[6]
+		self.position_id = user_data[7]
+		self.activity_points = user_data[8]
+		self.last_promotion_date = user_data[9]
+		self.hire_date = user_data[10]
+		self.fire_date = user_data[11]
+		self.fire_reason = user_data[12]
+		self.archived = user_data[13]
 		self.departament_head_or_dep = False
 		self.can_hire = False
 		self.can_promote = False
@@ -52,7 +53,6 @@ class User():
 		permissions = []
 		for i in bad_format:
 			permissions.append(i[0])
-		print(permissions)
 		if 4 in permissions:
 			self.can_promote = True
 		if 5 in permissions:
@@ -82,26 +82,26 @@ users = None
 # temp data
 
 
-def set_users(users_data: list):
+def set_users(users_data: list, users_secrets: list):
 	global users
 	users = defaultdict()
-	for user_data in users_data:
-		new_user = User(user_data)
+	for i, user_data in enumerate(users_data):
+		new_user = User(user_data, users_secrets[i])
 		users[new_user.id] = new_user
 
 
-set_users(db.employees_list()) # temp
+set_users(db.employees_list(), db.employees_sensitive_info_list()) # temp
 
 @app.after_request
 def update_users(response):
-	set_users(db.employees_list())
+	set_users(db.employees_list(), db.employees_sensitive_info_list())
 	return response
 
 
 @app.route("/")
 def index():
 	if current_user:
-		set_users(db.employees_list())
+		set_users(db.employees_list(), db.employees_sensitive_info_list())
 		return render_template('index.html', user=current_user, users=users)
 	else:
 		return render_template('index.html')
@@ -141,12 +141,11 @@ def login(email = "", password = ""):
 	password = request.form.get("password", "")
 	if request.method == "POST":
 		user_data = db.login(email = request.form["email"], password = request.form["password"])
-		print(user_data)
 		if user_data == None:
 			error = "Check your login data!"
 		else:
-			current_user = User(user_data)
-			set_users(db.employees_list())
+			current_user = User(user_data, db.employees_sensitive_info_list())
+			set_users(db.employees_list(), db.employees_sensitive_info_list())
 			return redirect(url_for("index"))
 
 	return render_template('login.html', email=email, password=password, error=error)
@@ -245,3 +244,16 @@ def activity(id: int):
 	db.register_activity(current_user.id, id, request.form["activity_id"])
 	return redirect(url_for('profile', id=id))
 	
+
+@app.route("/goals", ["GET", "POST"])
+def goals():
+	if not current_user:
+		return redirect(url_for("index"))
+	
+	if request.method == 'GET':
+		goals = db.get_goals()
+		types = db.get_goals_types()
+		return render_template("goals.html", goals=goals, types=types)
+	else:
+		if request.form.get("goal_type_name"):
+			pass

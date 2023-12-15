@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Goals page{% endblock %}
+{% block content %}
+<h1> Our goals</h1>
+<table>
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th>Type</th>
+	<th>Deadline</th> 
+</tr>
+{% for goal in goals %}
+	<tr>
+		<td>{{ goal[0] }}</td>
+		<td>{{ goal[1] }}</td>
+        <td>{{ goal[2] }}</td>
+        <td>{{ goal[3] }}</td>
+	</tr>
+{% endfor %}
+</table> 
+
+
+<hr>
+
+
+<h4> Goal types</h4>
+<table>
+<tr>
+	<th>Type</th>
+	<th>Description</th>
+</tr>
+{% for type in types %}
+	<tr>
+		<td>{{ type[0] }}</td>
+		<td>{{ type[1] }}</td>
+	</tr>
+{% endfor %}
+</table> 
+
+
+<hr>
+
+
+<h3>Add new goal</h3>
+<form id = "new_goal" action="{{ url_for('goals') }}" method="post">
+	<label for="goal_name">Enter goal name: </label>
+	<input name = "goal_name" id = "goal_name" type="text" required>
+	<br>
+
+    <label for="goal_descr">Enter goal description: </label>
+	<input name = "goal_descr" id = "goal_descr" type="text" required>
+	<br>
+
+	<label for="goal_type">Select goal type: </label>
+	<select form="new_goal" name="goal_type" required>
+		{% for _type in types %}
+		<option value = "{{ _type.id }}" > {{ _type.name }} {{ _type.description }} [{{ _type.id }}]</option>
+		{% endfor %}
+	</select>
+	<br>
+    <br>
+	<button type="submit" form="new_goal" formmethod="post">Add new goal</button>
+</form>
+
+
+<hr>
+
+
+<h3>Add new goal type</h3>
+<form id = "new_goal_type" action="{{ url_for('goals') }}" method="post">
+	<label for="goal_type_name">Enter goal type name: </label>
+	<input name = "goal_type_name" id = "goal_type_name" type="text" required>
+	<br>
+
+    <label for="goal_type_descr">Enter goal type description: </label>
+	<input name = "goal_type_descr" id = "goal_type_descr" type="text" required>
+	<br>
+
+	<br>
+    <br>
+	<button type="submit" form="new_goal_type" formmethod="post">Add new goal type</button>
+</form>
+
+{% endblock %}
