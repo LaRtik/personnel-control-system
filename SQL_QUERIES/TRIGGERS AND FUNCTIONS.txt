@@ -37,10 +37,10 @@ $employee_promoted$;
 
 
 // fire employee
-CREATE OR REPLACE PROCEDURE employee_fired(initiator_id integer, affected_id integer, reason text) 
+CREATE OR REPLACE PROCEDURE employee_fired(initiator_id integer, affected_id integer, reason_id integer) 
 LANGUAGE SQL AS $employee_fired$
 	UPDATE employees
-	SET access_level = 0, position_id = null, fire_date = CURRENT_TIMESTAMP, fire_reason = reason, archived = true
+	SET access_level = 0, position_id = null, fire_date = CURRENT_TIMESTAMP, fire_reason = reason_id, archived = true
 	WHERE id = affected_id;
 	
 	INSERT INTO logs(type, initiator_id, affected_id) VALUES

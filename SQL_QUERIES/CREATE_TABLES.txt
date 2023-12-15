@@ -5,6 +5,7 @@ CREATE TABLE access_levels (
 	salary money NOT NULL
 );
 
+
 CREATE TABLE positions (
 	id serial PRIMARY KEY,
 	name text NOT NULL,
@@ -14,15 +15,27 @@ CREATE TABLE positions (
 
 CREATE EXTENSION pgcrypto;
 
+CREATE TABLE fire_reasons (
+	id serial PRIMARY KEY,
+	description text NOT NULL
+);
+
+CREATE TABLE office_rooms (
+	id serial PRIMARY KEY,
+	floor integer NOT NULL
+);
+
+CREATE TABLE office_rooms_tables (
+	id serial PRIMARY KEY,
+	office_room_id int REFERENCES office_rooms (id) ON DELETE CASCADE
+);
+
 CREATE TABLE employees (
 	id serial PRIMARY KEY,
 	name text NOT NULL,
 	surname text NOT NULL,
-	date_of_birth date NOT NULL,
 	personal_link text NOT NULL,
-	phone_number text NOT NULL,
 	email char(50) NOT NULL,
-	city char(50) NOT NULL,
 	additional_info text,
 	access_level integer DEFAULT 0 REFERENCES access_levels (level) ON DELETE SET DEFAULT,
 	position_id integer REFERENCES positions (id) ON DELETE SET NULL,
@@ -30,10 +43,18 @@ CREATE TABLE employees (
 	last_promotion_date date,
 	hire_date date NOT NULL,
 	fire_date date,
-	fire_reason text,
+	fire_reason integer REFERENCES fire_reasons (id) ON DELETE SET NULL,
 	archived bool NOT NULL DEFAULT false,
-	pass_hash text NOT NULL,
+	pass_hash text NOT NULL
 );
+
+CREATE TABLE sensitive_employees_personal_info (
+	employee_id integer PRIMARY KEY REFERENCES employees (id) ON DELETE RESTRICT,
+	date_of_birth date NOT NULL,
+	city char(30) NOT NULL,
+	phone_number char(20) NOT NULL
+);
+
 
 CREATE TABLE departaments (
 	id serial PRIMARY KEY,
@@ -65,13 +86,81 @@ CREATE TABLE activities_tickets (
 	tstamp timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE tickets (
+CREATE TABLE activity_points_bonuses (
+	name char(50) PRIMARY KEY,
+	points integer NOT NULL,
+	description text NOT NULL
+);
+
+CREATE TABLE task_tickets_types (
+	type serial PRIMARY KEY,
+	description text NOT NULL
+);
+
+CREATE TABLE task_tickets (
 	id serial PRIMARY KEY,
-	from_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
-	to_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
-	salary_change money NOT NULL,
-	reason text NOT NULL,
+	owner integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	assignee integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	ticket_type int REFERENCES task_tickets_types(type) ON DELETE CASCADE,
 	tstamp timestamp DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE financial_tickets_types (
+	type serial PRIMARY KEY,
+	descrption text NOT NULL
+);
+
+CREATE TABLE financial_tickets (
+	id serial PRIMARY KEY,
+	owner integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	assignee integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	ticket_type int REFERENCES financial_tickets_types(type) ON DELETE CASCADE,
+	tstamp timestamp DEFAULT CURRENT_TIMESTAMP,
+	money_change money NOT NULL
+);
+
+CREATE TABLE gaps_types (
+	id serial PRIMARY KEY,
+	name char(50) NOT NULL,
+	description text NOT NULL
+);
+
+CREATE TABLE gaps (
+	id serial PRIMARY KEY,
+	employee_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	gap_type_id integer NOT NULL REFERENCES gaps_types(id) ON DELETE CASCADE,
+	start_dt date NOT NULL,
+	end_dt date NOT NULL,
+	additional_info text
+);
+
+CREATE TABLE goals_types (
+	id serial PRIMARY KEY,
+	name char(50) NOT NULL,
+	description text NOT NULL
+);
+
+CREATE TABLE goals (
+	id serial PRIMARY KEY,
+	name char(50) NOT NULL,
+	description text NOT NULL,
+	type integer NOT NULL REFERENCES goals_types(id) ON DELETE CASCADE,
+	deadline date NOT NULL
+);
+
+CREATE TABLE meetings_rooms (
+	id serial PRIMARY KEY,
+	additional_info text,
+	chairs_count integer NOT NULL DEFAULT 1,
+	has_screen boolean NOT NULL DEFAULT false
+);
+
+CREATE TABLE meetings (
+	id serial PRIMARY KEY,
+	start_ts timestamp NOT NULL,
+	end_ts timestamp NOT NULL,
+	additional_info text,
+	meeting_room_id integer NOT NULL REFERENCES meetings_rooms(id) ON DELETE CASCADE
 );
 
 CREATE TABLE permissions (
@@ -93,6 +182,7 @@ CREATE TABLE logs (
 	tstamp timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
+
 CREATE TABLE employees_projects (
 	project_id integer NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
 	employee_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
@@ -110,4 +200,16 @@ CREATE TABLE projects_permissions (
 	project_id integer NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
 	permission_id integer NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
 	CONSTRAINT projects_permissions_pkey PRIMARY KEY (project_id, permission_id)
+);
+
+CREATE TABLE employees_meetings (
+	meeting_id integer NOT NULL REFERENCES meetings(id) ON DELETE CASCADE,
+	employee_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	CONSTRAINT employees_meetings_pkey PRIMARY KEY (meeting_id, employee_id)
+);
+
+CREATE TABLE employees_goals (
+	goal_id integer NOT NULL REFERENCES goals(id) ON DELETE CASCADE,
+	employee_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
+	CONSTRAINT employees_goals_pkey PRIMARY KEY (goal_id, employee_id)
 );

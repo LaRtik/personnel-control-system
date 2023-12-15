@@ -1,5 +1,19 @@
+INSERT INTO log_types (description) VALUES
+('Fire employee'),
+('Hire employee'),
+('Registered'),
+('Ticket to employee'),
+('New project to departament'),
+('New departament'),
+('New head of departament'),
+('New deputy head of departament'),
+('New activity ticket'),
+('Add new activity'),
+('New permission added'),
+('Promote the employee');
+
 INSERT INTO access_levels (level, name, description, salary) VALUES 
-(0, 'No level', 'Base access level, witch is granted just after registration', 0,00),
+(0, 'No level', 'Base access level, witch is granted just after registration', 0),
 (1, 'Trainee', 'Trainee developer with base permissions', 250),
 (2, 'Junior', 'More expirienced, than trainee', 500),
 (3, 'Middle', 'Can be a deputy in departament', 1500),
@@ -19,7 +33,12 @@ INSERT INTO permissions (id, name, description) VALUES
 (5, 'Hire', 'Can promote other persons'),
 (6, 'Fire', 'Can fire other employees'),
 (7, 'Invite to the departament', 'Can add other employees to the departament'),
-(8, 'New project', 'Can add new project');
+(8, 'New project', 'Can add new project'),
+(9, 'Government database', 'Access for government database'),
+(10, 'Employees logs', 'Access for full employees logs'),
+(11, 'Users database', 'Access for users database'),
+(12, 'New departament', 'Can create departaments'),
+(13, 'View profile', 'Can view other employees profiles');
 
 
 INSERT INTO activities (name, points, description, required_access_level) VALUES
@@ -46,27 +65,81 @@ INSERT INTO positions (id, name, description, salary) VALUES
 (7, 'Secity Engineer', 'Creates infrastructure for security development', 550),
 (8, 'UI Artist', 'Designs the UI', 450);
 
+INSERT INTO fire_reasons (id, description) VALUES
+(1, 'Own request'),
+(2, 'Сonscription into the army'),
+(3, 'Maternity leave'),
+(4, 'Violation of labor laws');
 
-INSERT INTO employees (id, name, surname, date_of_birth, personal_link, phone_number, email, city, additional_info, access_level, position_id, activity_points, last_promotion_date, hire_date, fire_date, fire_reason, archived) VALUES
-(1, 'Alex', 'Filatov', '2001-09-11', 'mylink.com/afilatov', '78989899888', 'alex_filatov@mycompany.com', 'Los Angeles', NULL, 7, 1, 0.00, '2020-04-01', '2020-04-01', NULL, NULL, false),
-(2, 'Martin', 'DeSanta', '2002-07-03', 'mylink.com/mdesanta', '78989899889', 'martin_desanta@mycompany.com', 'Sacramento', NULL, 5, 1, 0.00, '2022-01-06', '2020-09-08', NULL, NULL, false),
-(3, 'Bryan', 'Stoks', '2003-01-11', 'mylink.com/bstoks', '78989899810', 'bryan_stoks@mycompany.com', 'San Francisco', NULL, 5, 1, 0.00, '2022-01-06', '2021-01-08', NULL, NULL, false),
-(4, 'Jimmy', 'Bonhart', '2001-01-01', 'mylink.com/jbonhart', '78989837489', 'jimmy_bonhart@mycompany.com', 'Los Angeles', NULL, 4, 7, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
-(5, 'Alex', 'Liquid', '2001-01-01', 'mylink.com/aliquid', '78989834489', 'alex_liquid@mycompany.com', 'Los Angeles', NULL, 4, 6, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
-(6, 'Avangard', 'Wallace', '2001-01-01', 'mylink.com/awallace', '78987837489', 'avangard_wallace@mycompany.com', 'Los Angeles', NULL, 4, 5, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
-(7, 'Maksim', 'Wallace', '2001-01-01', 'mylink.com/mwallace', '88989837489', 'maksim_wallace@mycompany.com', 'Kiev', NULL, 4, 1, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
-(8, 'Sebastian', 'Devis', '2001-01-01', 'mylink.com/sdevis', '78779837489', 'sebastian_devis@mycompany.com', 'Moscow', NULL, 4, 4, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
-(9, 'Dorian', 'Rouse', '2001-01-01', 'mylink.com/drouse', '78989837779', 'dorian_rouse@mycompany.com', 'Moscow', NULL, 3, 3, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
-(10, 'Logan', 'Cornello', '2001-01-01', 'mylink.com/lcornello', '78989837777', 'logan_cornello@mycompany.com', 'Kiev', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
-(11, 'Arhont', 'Sherwood', '2001-01-01', 'mylink.com/asherwood', '77789837779', 'arhont_sherwood@mycompany.com', 'Los Angeles', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false),
-(12, 'Martin', 'Hennessy', '2001-01-01', 'mylink.com/mhennessy', '78989834479', 'martin_hennessy@mycompany.com', 'Moscow', NULL, 2, 7, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false),
-(13, 'Samuel', 'Morrisson', '2001-01-01', 'mylink.com/smorrisson', '78984434479', 'samuel_morrisson@mycompany.com', 'Moscow', NULL, 2, 8, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false),
-(14, 'Cody', 'Biden', '2001-01-01', 'mylink.com/cbiden', '78989834444', 'cody_biden@mycompany.com', 'Los Angeles', NULL, 2, 5, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false),
-(15, 'William', 'Broun', '2001-01-01', 'mylink.com/wbroun', '78944834479', 'william_broun@mycompany.com', 'Moscow', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false),
-(16, 'Vissarion', 'Chicago', '2001-01-01', 'mylink.com/vchicago', '78944434479', 'vissarion_chicago@mycompany.com', 'Moscow', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false),
-(17, 'Tea', 'Chicago', '2001-01-01', 'mylink.com/tchicago', '74444834479', 'tea_chicago@mycompany.com', 'Moscow', NULL, 1, 8, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false),
-(0, 'Sam', 'Mason', '1999-01-01', 'mylink.com/smason', '78789798789', 'sam_mason@mycompany.com', 'San Francisco', NULL, 8, 1, 0.00, '2019-04-01', '2019-04-01', NULL, NULL, false);
+INSERT INTO office_rooms (id, floor) VALUES
+(101, 1),
+(102, 1),
+(103, 1),
+(104, 1),
+(105, 1),
+(201, 2),
+(202, 2),
+(203, 2),
+(204, 2),
+(205, 2),
+(301, 3),
+(302, 3),
+(303, 3),
+(304, 3),
+(305, 3);
 
+INSERT INTO office_rooms_tables (id, office_room_id) VALUES
+(30501, 305),
+(30502, 305),
+(30503, 305),
+(30504, 305),
+(30505, 305),
+(20501, 205),
+(20502, 205),
+(20503, 205),
+(20504, 205),
+(20505, 205);
+
+INSERT INTO employees (id, name, surname, personal_link, email, additional_info, access_level, position_id, activity_points, last_promotion_date, hire_date, fire_date, fire_reason, archived, pass_hash) VALUES
+(1, 'Alex', 'Filatov', 'mylink.com/afilatov', 'alex_filatov@mycompany.com', NULL, 7, 1, 0.00, '2020-04-01', '2020-04-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(2, 'Martin', 'DeSanta', 'mylink.com/mdesanta', 'martin_desanta@mycompany.com', NULL, 5, 1, 0.00, '2022-01-06', '2020-09-08', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(3, 'Bryan', 'Stoks', 'mylink.com/bstoks', 'bryan_stoks@mycompany.com', NULL, 5, 1, 0.00, '2022-01-06', '2021-01-08', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(4, 'Jimmy', 'Bonhart', 'mylink.com/jbonhart', 'jimmy_bonhart@mycompany.com', NULL, 4, 7, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(5, 'Alex', 'Liquid', 'mylink.com/aliquid', 'alex_liquid@mycompany.com', NULL, 4, 6, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(6, 'Avangard', 'Wallace', 'mylink.com/awallace', 'avangard_wallace@mycompany.com', NULL, 4, 5, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(7, 'Maksim', 'Wallace', 'mylink.com/mwallace', 'maksim_wallace@mycompany.com', NULL, 4, 1, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(8, 'Sebastian', 'Devis', 'mylink.com/sdevis', 'sebastian_devis@mycompany.com', NULL, 4, 4, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(9, 'Dorian', 'Rouse', 'mylink.com/drouse', 'dorian_rouse@mycompany.com', NULL, 3, 3, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(10, 'Logan', 'Cornello', 'mylink.com/lcornello', 'logan_cornello@mycompany.com', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(11, 'Arhont', 'Sherwood', 'mylink.com/asherwood', 'arhont_sherwood@mycompany.com', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(12, 'Martin', 'Hennessy', 'mylink.com/mhennessy', 'martin_hennessy@mycompany.com', NULL, 2, 7, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(13, 'Samuel', 'Morrisson', 'mylink.com/smorrisson', 'samuel_morrisson@mycompany.com', NULL, 2, 8, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(14, 'Cody', 'Biden', 'mylink.com/cbiden', 'cody_biden@mycompany.com', NULL, 2, 5, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(15, 'William', 'Broun', 'mylink.com/wbroun', 'william_broun@mycompany.com', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(16, 'Vissarion', 'Chicago', 'mylink.com/vchicago', 'vissarion_chicago@mycompany.com', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(17, 'Tea', 'Chicago', 'mylink.com/tchicago', 'tea_chicago@mycompany.com', NULL, 1, 8, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
+(0, 'Sam', 'Mason', 'mylink.com/smason', 'sam_mason@mycompany.com', NULL, 8, 1, 0.00, '2019-04-01', '2019-04-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a');
+
+
+INSERT INTO sensitive_employees_personal_info(employee_id, date_of_birth, city, phone_number) VALUES
+    (0, '1999-01-01', 'San Francisco', '78789798789'),
+    (1, '2001-09-11', 'Los Angeles', '78989899888'),
+    (2, '2002-07-03', 'Sacramento', '78989899889'),
+    (3, '2003-01-11', 'San Francisco', '78989899810'),
+    (4, '2003-08-11', 'Los Angeles', '78989899811'),
+    (5, '2001-07-01', 'Moscow', '78989899812'),
+    (6, '2000-11-17', 'Minsk', '78989899813'),
+    (7, '2001-10-16', 'Kiev', '78989899814'),
+    (8, '2001-09-11', 'Los Angeles', '78989899815'),
+    (9, '2002-07-03', 'Sacramento', '78989899816'),
+    (10, '2003-01-11', 'San Francisco', '78989899817'),
+    (11, '2003-08-11', 'Los Angeles', '78989899818'),
+    (12, '2001-07-01', 'Moscow', '78989899819'),
+    (13, '2000-11-17', 'Minsk', '78989899820'),
+    (14, '2001-10-16', 'Kiev', '78989899821'),
+    (15, '2001-10-16', 'Kiev', '78989899822'),
+    (16, '2001-09-11', 'Los Angeles', '78989899823'),
+    (17, '2002-07-03', 'Sacramento', '78989899824');
 
 INSERT INTO activities_tickets (activity, description, owner_id) VALUES
 ('Hire', 'Hired new person', 0),
@@ -119,36 +192,6 @@ INSERT INTO tickets (from_id, to_id, salary_change, reason) VALUES
 (1, 2, 30, 'New system implemented faster than expected'),
 (1, 3, 15, 'Help with report checking');
 
-
-INSERT INTO permissions (name, description) VALUES
-('Git push', 'Can push changes to the git'),
-('Code review', 'Can participate in code reviews'),
-('Chat', 'Can use project chat'),
-('Promote', 'Can promote other employees'),
-('Hire', 'Can promote other persons'),
-('Fire', 'Can fire other employees'),
-('Invite to the departament', 'Can add other employees to the departament'),
-('New project', 'Can add new project'),
-('Government database', 'Access for government database'),
-('Employees logs', 'Access for full employees logs'),
-('Users database', 'Access for users database'),
-('New departament', 'Can create departaments'),
-('View profile', 'Can view other employees profiles');
-
-
-INSERT INTO log_types (description) VALUES
-('Fire employee'),
-('Hire employee'),
-('Registered'),
-('Ticket to employee'),
-('New project to departament'),
-('New departament'),
-('New head of departament'),
-('New deputy head of departament'),
-('New activity ticket'),
-('Add new activity'),
-('New permission added'),
-('Promote the employee');
 
 
 INSERT INTO employees_projects (project_id, employee_id, salary)
@@ -222,81 +265,3 @@ INSERT INTO projects_permissions (project_id, permission_id) VALUES
 (1, 10),
 (2, 11),
 (3, 9);
-
-
-INSERT INTO logs(type,initiator_id,affected_id) VALUES
-(3, 0, null),
-(3, 1, null),
-(2, 0, 1);
-
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 3, id, null FROM employees
-WHERE id > 1;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 2, 1,id FROM employees
-WHERE id > 1;
-
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 1;
-
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 2;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 2;
-
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 3;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 3;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 3;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 4;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 4;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 4;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 4;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 5;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 5;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 5;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 5;
-
-INSERT INTO logs(type,initiator_id,affected_id)
-SELECT 12,1,id FROM employees
-WHERE access_level = 5;
