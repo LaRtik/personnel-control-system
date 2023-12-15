@@ -45,7 +45,8 @@ CREATE TABLE employees (
 	fire_date date,
 	fire_reason integer REFERENCES fire_reasons (id) ON DELETE SET NULL,
 	archived bool NOT NULL DEFAULT false,
-	pass_hash text NOT NULL
+	pass_hash text NOT NULL,
+	office_table_id integer DEFAULT NULL REFERENCES office_rooms_tables (id) ON DELETE SET NULL
 );
 
 CREATE TABLE sensitive_employees_personal_info (
@@ -107,7 +108,7 @@ CREATE TABLE task_tickets (
 
 CREATE TABLE financial_tickets_types (
 	type serial PRIMARY KEY,
-	descrption text NOT NULL
+	description text NOT NULL
 );
 
 CREATE TABLE financial_tickets (
@@ -142,8 +143,6 @@ CREATE TABLE goals_types (
 
 CREATE TABLE goals (
 	id serial PRIMARY KEY,
-	name char(50) NOT NULL,
-	description text NOT NULL,
 	type integer NOT NULL REFERENCES goals_types(id) ON DELETE CASCADE,
 	deadline date NOT NULL
 );
@@ -186,7 +185,6 @@ CREATE TABLE logs (
 CREATE TABLE employees_projects (
 	project_id integer NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
 	employee_id integer NOT NULL REFERENCES employees(id) ON DELETE CASCADE,
-	salary money NOT NULL,
 	CONSTRAINT employees_projects_pkey PRIMARY KEY (project_id, employee_id)
 );
 

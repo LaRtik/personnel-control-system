@@ -98,27 +98,37 @@ INSERT INTO office_rooms_tables (id, office_room_id) VALUES
 (20502, 205),
 (20503, 205),
 (20504, 205),
-(20505, 205);
+(20505, 205),
+(10501, 105),
+(10502, 105),
+(10503, 105),
+(10504, 105),
+(10505, 105),
+(10401, 104),
+(10402, 104),
+(10403, 104),
+(10404, 104),
+(10405, 104);
 
-INSERT INTO employees (id, name, surname, personal_link, email, additional_info, access_level, position_id, activity_points, last_promotion_date, hire_date, fire_date, fire_reason, archived, pass_hash) VALUES
-(1, 'Alex', 'Filatov', 'mylink.com/afilatov', 'alex_filatov@mycompany.com', NULL, 7, 1, 0.00, '2020-04-01', '2020-04-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(2, 'Martin', 'DeSanta', 'mylink.com/mdesanta', 'martin_desanta@mycompany.com', NULL, 5, 1, 0.00, '2022-01-06', '2020-09-08', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(3, 'Bryan', 'Stoks', 'mylink.com/bstoks', 'bryan_stoks@mycompany.com', NULL, 5, 1, 0.00, '2022-01-06', '2021-01-08', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(4, 'Jimmy', 'Bonhart', 'mylink.com/jbonhart', 'jimmy_bonhart@mycompany.com', NULL, 4, 7, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(5, 'Alex', 'Liquid', 'mylink.com/aliquid', 'alex_liquid@mycompany.com', NULL, 4, 6, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(6, 'Avangard', 'Wallace', 'mylink.com/awallace', 'avangard_wallace@mycompany.com', NULL, 4, 5, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(7, 'Maksim', 'Wallace', 'mylink.com/mwallace', 'maksim_wallace@mycompany.com', NULL, 4, 1, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(8, 'Sebastian', 'Devis', 'mylink.com/sdevis', 'sebastian_devis@mycompany.com', NULL, 4, 4, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(9, 'Dorian', 'Rouse', 'mylink.com/drouse', 'dorian_rouse@mycompany.com', NULL, 3, 3, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(10, 'Logan', 'Cornello', 'mylink.com/lcornello', 'logan_cornello@mycompany.com', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(11, 'Arhont', 'Sherwood', 'mylink.com/asherwood', 'arhont_sherwood@mycompany.com', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(12, 'Martin', 'Hennessy', 'mylink.com/mhennessy', 'martin_hennessy@mycompany.com', NULL, 2, 7, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(13, 'Samuel', 'Morrisson', 'mylink.com/smorrisson', 'samuel_morrisson@mycompany.com', NULL, 2, 8, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(14, 'Cody', 'Biden', 'mylink.com/cbiden', 'cody_biden@mycompany.com', NULL, 2, 5, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(15, 'William', 'Broun', 'mylink.com/wbroun', 'william_broun@mycompany.com', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(16, 'Vissarion', 'Chicago', 'mylink.com/vchicago', 'vissarion_chicago@mycompany.com', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(17, 'Tea', 'Chicago', 'mylink.com/tchicago', 'tea_chicago@mycompany.com', NULL, 1, 8, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a'),
-(0, 'Sam', 'Mason', 'mylink.com/smason', 'sam_mason@mycompany.com', NULL, 8, 1, 0.00, '2019-04-01', '2019-04-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a');
+INSERT INTO employees (id, name, surname, personal_link, email, additional_info, access_level, position_id, activity_points, last_promotion_date, hire_date, fire_date, fire_reason, archived, pass_hash, office_table_id) VALUES
+(1, 'Alex', 'Filatov', 'mylink.com/afilatov', 'alex_filatov@mycompany.com', NULL, 7, 1, 0.00, '2020-04-01', '2020-04-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 30501),
+(2, 'Martin', 'DeSanta', 'mylink.com/mdesanta', 'martin_desanta@mycompany.com', NULL, 5, 1, 0.00, '2022-01-06', '2020-09-08', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 30502),
+(3, 'Bryan', 'Stoks', 'mylink.com/bstoks', 'bryan_stoks@mycompany.com', NULL, 5, 1, 0.00, '2022-01-06', '2021-01-08', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 30503),
+(4, 'Jimmy', 'Bonhart', 'mylink.com/jbonhart', 'jimmy_bonhart@mycompany.com', NULL, 4, 7, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 30504),
+(5, 'Alex', 'Liquid', 'mylink.com/aliquid', 'alex_liquid@mycompany.com', NULL, 4, 6, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 30505),
+(6, 'Avangard', 'Wallace', 'mylink.com/awallace', 'avangard_wallace@mycompany.com', NULL, 4, 5, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 20501),
+(7, 'Maksim', 'Wallace', 'mylink.com/mwallace', 'maksim_wallace@mycompany.com', NULL, 4, 1, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 20502),
+(8, 'Sebastian', 'Devis', 'mylink.com/sdevis', 'sebastian_devis@mycompany.com', NULL, 4, 4, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 20503),
+(9, 'Dorian', 'Rouse', 'mylink.com/drouse', 'dorian_rouse@mycompany.com', NULL, 3, 3, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 20504),
+(10, 'Logan', 'Cornello', 'mylink.com/lcornello', 'logan_cornello@mycompany.com', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 20505),
+(11, 'Arhont', 'Sherwood', 'mylink.com/asherwood', 'arhont_sherwood@mycompany.com', NULL, 3, 2, 0.00, '2022-01-01', '2021-01-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 10501),
+(12, 'Martin', 'Hennessy', 'mylink.com/mhennessy', 'martin_hennessy@mycompany.com', NULL, 2, 7, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 10502),
+(13, 'Samuel', 'Morrisson', 'mylink.com/smorrisson', 'samuel_morrisson@mycompany.com', NULL, 2, 8, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 10503),
+(14, 'Cody', 'Biden', 'mylink.com/cbiden', 'cody_biden@mycompany.com', NULL, 2, 5, 0.00, '2022-01-01', '2021-12-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 10504),
+(15, 'William', 'Broun', 'mylink.com/wbroun', 'william_broun@mycompany.com', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 10505),
+(16, 'Vissarion', 'Chicago', 'mylink.com/vchicago', 'vissarion_chicago@mycompany.com', NULL, 1, 4, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 10401),
+(17, 'Tea', 'Chicago', 'mylink.com/tchicago', 'tea_chicago@mycompany.com', NULL, 1, 8, 0.00, '2022-01-01', '2022-07-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 10402),
+(0, 'Sam', 'Mason', 'mylink.com/smason', 'sam_mason@mycompany.com', NULL, 8, 1, 0.00, '2019-04-01', '2019-04-01', NULL, NULL, false, '$2a$06$nuyVwcJFKUA/V3rDrgyfz.0wqYv8KNyayrwQXsqrWdLx6fVYNW88a', 10403);
 
 
 INSERT INTO sensitive_employees_personal_info(employee_id, date_of_birth, city, phone_number) VALUES
@@ -141,37 +151,37 @@ INSERT INTO sensitive_employees_personal_info(employee_id, date_of_birth, city, 
     (16, '2001-09-11', 'Los Angeles', '78989899823'),
     (17, '2002-07-03', 'Sacramento', '78989899824');
 
-INSERT INTO activities_tickets (activity, description, owner_id) VALUES
-('Hire', 'Hired new person', 0),
-('Hire', 'Hired new person', 1),
-('Hire', 'Hired new person', 1),
-('Hire', 'Hired new person', 1),
-('Hire', 'Hired new person', 1),
-('Hire', 'Hired new person', 1),
-('Hire', 'Hired new person', 1),
-('Hire', 'Hired new person', 1),
-('Hire', 'Hired new person', 1),
-('Hire', 'Hired new person', 1),
-('Hire', 'Hired new person', 1),
-('New company feature', 'Personnel Conrtol System', 2),
-('New project', 'Techinal support web', 2),
-('Report', 'New report from the employee', 1),
-('Report', 'New report from the employee', 2),
-('Report', 'New report from the employee', 3),
-('Report', 'New report from the employee', 4),
-('Report', 'New report from the employee', 5),
-('Report', 'New report from the employee', 6),
-('Report', 'New report from the employee', 7),
-('Report', 'New report from the employee', 8),
-('Report', 'New report from the employee', 9),
-('Report', 'New report from the employee', 10),
-('Report', 'New report from the employee', 11),
-('Report', 'New report from the employee', 12),
-('Report', 'New report from the employee', 13),
-('Report', 'New report from the employee', 14),
-('Report', 'New report from the employee', 15),
-('Report', 'New report from the employee', 16),
-('Report', 'New report from the employee', 17)
+INSERT INTO activities_tickets (id, activity, description, owner_id) VALUES
+(0, 'Hire', 'Hired new person', 0),
+(1, 'Hire', 'Hired new person', 1),
+(2, 'Hire', 'Hired new person', 1),
+(3, 'Hire', 'Hired new person', 1),
+(4, 'Hire', 'Hired new person', 1),
+(5, 'Hire', 'Hired new person', 1),
+(6, 'Hire', 'Hired new person', 1),
+(7, 'Hire', 'Hired new person', 1),
+(8, 'Hire', 'Hired new person', 1),
+(9, 'Hire', 'Hired new person', 1),
+(10, 'Hire', 'Hired new person', 1),
+(11, 'New company feature', 'Personnel Conrtol System', 2),
+(12, 'New project', 'Techinal support web', 2),
+(13, 'Report', 'New report from the employee', 1),
+(14, 'Report', 'New report from the employee', 2),
+(15, 'Report', 'New report from the employee', 3),
+(16, 'Report', 'New report from the employee', 4),
+(17, 'Report', 'New report from the employee', 5),
+(18, 'Report', 'New report from the employee', 6),
+(19, 'Report', 'New report from the employee', 7),
+(20, 'Report', 'New report from the employee', 8),
+(21, 'Report', 'New report from the employee', 9),
+(22, 'Report', 'New report from the employee', 10),
+(23, 'Report', 'New report from the employee', 11),
+(24, 'Report', 'New report from the employee', 12),
+(25, 'Report', 'New report from the employee', 13),
+(26, 'Report', 'New report from the employee', 14),
+(27, 'Report', 'New report from the employee', 15),
+(28, 'Report', 'New report from the employee', 16),
+(29, 'Report', 'New report from the employee', 17);
 
 
 INSERT INTO departaments (id, name, head_id, deputy_head_id) VALUES
@@ -186,26 +196,31 @@ INSERT INTO projects (id, name, departament_id) VALUES
 (3, 'Government tax web-platform', 3);
 
 
-
-INSERT INTO tickets (from_id, to_id, salary_change, reason) VALUES
-(0, 1, -30, 'Late with the report'),
-(1, 2, 30, 'New system implemented faster than expected'),
-(1, 3, 15, 'Help with report checking');
-
+INSERT INTO financial_tickets_types (type, description) VALUES
+(0, 'Late with the report'),
+(1, 'New system implemented faster than expected'),
+(2, 'Help with report checking');
 
 
-INSERT INTO employees_projects (project_id, employee_id, salary)
-SELECT 1, id, 100 FROM employees
+INSERT INTO financial_tickets (id, owner, assignee, ticket_type, money_change) VALUES
+(0, 0, 1, 0, -30),
+(1, 1, 2, 1, 30),
+(2, 1, 3, 2, 15);
+
+
+
+INSERT INTO employees_projects (project_id, employee_id)
+SELECT 1, id FROM employees
 WHERE access_level < 3;
 
 
-INSERT INTO employees_projects (project_id, employee_id, salary)
-SELECT 3, id, 300 FROM employees
+INSERT INTO employees_projects (project_id, employee_id)
+SELECT 3, id FROM employees
 WHERE access_level = 4;
 
 
-INSERT INTO employees_projects (project_id, employee_id, salary)
-SELECT 2, id, 200 FROM employees
+INSERT INTO employees_projects (project_id, employee_id)
+SELECT 2, id FROM employees
 WHERE access_level = 2;
 
 
@@ -265,3 +280,83 @@ INSERT INTO projects_permissions (project_id, permission_id) VALUES
 (1, 10),
 (2, 11),
 (3, 9);
+
+
+INSERT INTO task_tickets_types (type, description) VALUES
+(0, 'Fix bug'),
+(1, 'Create feature'),
+(2, 'Deploy project');
+
+
+INSERT INTO task_tickets (id, owner, assignee, ticket_type) VALUES
+(0, 1, 4, 0),
+(1, 1, 5, 1),
+(2, 1, 6, 2);
+
+
+INSERT INTO activity_points_bonuses (name, points, description) VALUES
+('gratitude', 5, 'gratitude for the merits'),
+('prize', 25, 'the award for success in work'),
+('Vacation', 75, 'Additional vacation days');
+
+
+INSERT INTO meetings_rooms (id, chairs_count, has_screen) VALUES
+(0, 10, false),
+(1, 15, false),
+(2, 75, true);
+
+
+INSERT INTO meetings (id, start_ts, end_ts, meeting_room_id) VALUES
+(0, '2023-12-12 11:30:00', '2023-12-12 12:30:00', 0),
+(1, '2023-12-15 11:30:00', '2023-12-15 12:30:00', 1),
+(2, '2023-12-31 21:30:00', '2024-01-01 12:00:00', 2);
+
+
+INSERT INTO employees_meetings (meeting_id, employee_id) VALUES
+(0, 0),
+(0, 1),
+(0, 2),
+(0, 3),
+(1, 0),
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(2, 0),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 5),
+(2, 6);
+
+
+INSERT INTO gaps_types (id, name, description) VALUES
+(0, 'Late arrival', 'Being late for work'),
+(1, 'non-fulfillment on time', 'failure to fulfill their duties on time'),
+(2, 'absence', 'absence from the workplace for no good reason');
+
+
+INSERT INTO gaps (employee_id, gap_type_id, start_dt, end_dt) VALUES
+(0, 0, '2023-12-12', '2023-12-12'),
+(1, 1, '2023-12-12', '2023-12-12'),
+(2, 2, '2023-12-12', '2023-12-13');
+
+
+INSERT INTO goals_types (id, name, description) VALUES
+(0, 'Improve skills', 'improve your professional skills'),
+(1, 'get a promotion', 'get a promotion on the career ladder');
+
+
+INSERT INTO goals (id, type, deadline) VALUES
+(0, 0, '2024-06-12'),
+(1, 1, '2024-12-12');
+
+INSERT INTO employees_goals (goal_id, employee_id) VALUES
+(0, 1),
+(1, 2),
+(0, 3),
+(1, 4),
+(0, 5),
+(1, 6);
