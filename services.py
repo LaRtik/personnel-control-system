@@ -148,6 +148,12 @@ class Database():
 		SELECT * FROM goals_types
 		""")
 		return self._cursor.fetchall()
+	
+	def add_goals(self, initiator_id, type_id, deadline, employees_ids):
+		self._cursor.execute(f"""
+		CALL add_goal({initiator_id}, {type_id}, '{deadline}', {employees_ids});
+		""")
+		self.__connection.commit()
 
 
 	def __test_connection(self):	

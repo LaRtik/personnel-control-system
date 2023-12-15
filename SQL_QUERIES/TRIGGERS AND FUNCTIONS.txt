@@ -105,6 +105,30 @@ LANGUAGE SQL AS $add_goal_type$
 	(15, initianor_id, null);
 $add_goal_type$;
 
+-- add new goal
+CREATE OR REPLACE PROCEDURE add_goal(initiator_id integer, type integer, deadline date, employees_ids integer ARRAY) 
+AS $add_goal$
+	DECLARE inserted_id integer;
+	BEGIN
+
+		INSERT INTO goals (type, deadline) VALUES
+		(type, deadline) RETURNING id INTO inserted_id;
+
+		INSERT INTO logs(type, initiator_id, affected_id) VALUES
+		(17, initiator_id, null);
+
+		
+		FOREACH employee_id in ARRAY employees_ids
+		LOOP
+			INSERT INTO employees_goals(goal_id, employee_id) VALUES
+			(inserted_id, employee_id);
+
+			INSERT INTO logs(type, initiator_id, affected_id) VALUES
+			(16, initiator_id, employee_id);
+		ENDLOOP
+	END;
+$add_goal$ LANGUAGE plpgsql;
+
 
 // trigger for activities from logs
 CREATE OR REPLACE FUNCTION activities_from_logs() RETURNS trigger AS $activities_from_logs$

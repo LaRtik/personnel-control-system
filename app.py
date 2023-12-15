@@ -253,7 +253,12 @@ def goals():
 	if request.method == 'GET':
 		goals = db.get_goals()
 		types = db.get_goals_types()
-		return render_template("goals.html", goals=goals, types=types)
+		return render_template("goals.html", user = current_user, goals=goals, types=types, users=users)
 	else:
-		if request.form.get("goal_type_name"):
-			pass
+		print(request.form)
+		if request.form.get("goal_deadline"):
+			type_id = request.form.get('goal_type')
+			deadline = request.form.get('goal_deadline')
+			employees_ids = request.form.get('goal_employees')
+			db.add_goals(current_user.id, type_id, deadline, employees_ids)
+			return redirect(url_for('goals'))

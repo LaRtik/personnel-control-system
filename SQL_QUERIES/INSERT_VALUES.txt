@@ -13,7 +13,9 @@ INSERT INTO log_types (description) VALUES
 ('Promote the employee'),
 ('New office room added')',
 ('New meeting room added'),
-('New goal type added');
+('New goal type added'),
+('Goal assigned'),
+('Goal created');
 
 
 INSERT INTO access_levels (level, name, description, salary) VALUES 

@@ -5,16 +5,14 @@
 <table>
 <tr>
 	<th>ID</th>
-	<th>Name</th>
 	<th>Type</th>
 	<th>Deadline</th> 
 </tr>
 {% for goal in goals %}
 	<tr>
 		<td>{{ goal[0] }}</td>
-		<td>{{ goal[1] }}</td>
+        <td>{{ types[goal[1]][1] }}[{{ goal[1] }}]</td>
         <td>{{ goal[2] }}</td>
-        <td>{{ goal[3] }}</td>
 	</tr>
 {% endfor %}
 </table> 
@@ -27,12 +25,14 @@
 <table>
 <tr>
 	<th>Type</th>
-	<th>Description</th>
+	<th>Name</th>
+    <th>Description</th>
 </tr>
 {% for type in types %}
 	<tr>
 		<td>{{ type[0] }}</td>
 		<td>{{ type[1] }}</td>
+        <td>{{ type[2] }}</td>
 	</tr>
 {% endfor %}
 </table> 
@@ -43,18 +43,22 @@
 
 <h3>Add new goal</h3>
 <form id = "new_goal" action="{{ url_for('goals') }}" method="post">
-	<label for="goal_name">Enter goal name: </label>
-	<input name = "goal_name" id = "goal_name" type="text" required>
+    <label for="goal_deadline">Enter goal deadline: </label>
+	<input name = "goal_deadline" id = "goal_deadline" type="date" required>
 	<br>
-
-    <label for="goal_descr">Enter goal description: </label>
-	<input name = "goal_descr" id = "goal_descr" type="text" required>
-	<br>
-
+    
 	<label for="goal_type">Select goal type: </label>
 	<select form="new_goal" name="goal_type" required>
-		{% for _type in types %}
-		<option value = "{{ _type.id }}" > {{ _type.name }} {{ _type.description }} [{{ _type.id }}]</option>
+		{% for type in types %}
+		<option value = "{{ type[0] }}" > {{ type[1] }} {{ type[2] }} [{{ type[0] }}]</option>
+		{% endfor %}
+	</select>
+    <br>
+
+    <label for="goal_employees">Select employees for goal assignee: </label>
+	<select form="new_goal" name="goal_employees" multiple required>
+		{% for user in users.values() %}
+		<option value = "{{ user.id }}" > {{ user.name }} {{ user.surname }} [{{ user.id }}]</option>
 		{% endfor %}
 	</select>
 	<br>
