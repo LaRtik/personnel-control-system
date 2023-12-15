@@ -10,7 +10,11 @@ INSERT INTO log_types (description) VALUES
 ('New activity ticket'),
 ('Add new activity'),
 ('New permission added'),
-('Promote the employee');
+('Promote the employee'),
+('New office room added')',
+('New meeting room added'),
+('New goal type added');
+
 
 INSERT INTO access_levels (level, name, description, salary) VALUES 
 (0, 'No level', 'Base access level, witch is granted just after registration', 0),

@@ -73,6 +73,39 @@ END;
 $new_departament$;
 
 
+-- add new office room
+CREATE OR REPLACE PROCEDURE add_office_room(initiator_id integer, id integer, floor integer) 
+LANGUAGE SQL AS $add_office_room$
+	INSERT INTO office_rooms(id, floor) VALUES
+	(id, floor);
+
+	INSERT INTO logs(type, initiator_id, affected_id) VALUES
+	(13, initiator_id, null);
+$add_office_room$;
+
+
+-- add new meeting room
+CREATE OR REPLACE PROCEDURE add_meeting_room(initiator_id integer, id integer, additional_info text, chairs_count int, has_screen boolean) 
+LANGUAGE SQL AS $add_meeting_room$
+	INSERT INTO meetings_rooms(id, additional_info, chairs_count, has_screen) VALUES
+	(id, additional_info, chairs_count, has_screen);
+
+	
+	INSERT INTO logs(type, initiator_id, affected_id) VALUES
+	(14, initiator_id, null);
+$add_meeting_room$;
+
+-- add new goal type
+CREATE OR REPLACE PROCEDURE add_goal_type(initianor_id integer, name char(50), description text) 
+LANGUAGE SQL AS $add_goal_type$
+	INSERT INTO goals_types(name, description) VALUES
+	(name, description);
+	
+	INSERT INTO logs(type, initiator_id, affected_id) VALUES
+	(15, initianor_id, null);
+$add_goal_type$;
+
+
 // trigger for activities from logs
 CREATE OR REPLACE FUNCTION activities_from_logs() RETURNS trigger AS $activities_from_logs$
 	BEGIN
