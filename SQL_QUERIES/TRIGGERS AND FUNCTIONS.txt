@@ -1,4 +1,4 @@
-// trigger registered
+-- trigger registered
 CREATE OR REPLACE FUNCTION employee_registered() RETURNS trigger AS $employee_registered$
 	BEGIN
 		INSERT INTO logs(type, initiator_id) SELECT 3, NEW.id;
@@ -12,7 +12,7 @@ FOR EACH ROW EXECUTE PROCEDURE employee_registered();
 
 
 
-// hire employee
+-- hire employee
 CREATE OR REPLACE PROCEDURE employee_hired(initiator_id integer, affected_id integer) 
 LANGUAGE SQL AS $employee_hired$
 	UPDATE employees
@@ -24,7 +24,7 @@ LANGUAGE SQL AS $employee_hired$
 $employee_hired$;
 
 
-// promote employee
+-- promote employee
 CREATE OR REPLACE PROCEDURE employee_promoted(initiator_id integer, affected_id integer) 
 LANGUAGE SQL AS $employee_promoted$
 	UPDATE employees
@@ -36,7 +36,7 @@ LANGUAGE SQL AS $employee_promoted$
 $employee_promoted$;
 
 
-// fire employee
+-- fire employee
 CREATE OR REPLACE PROCEDURE employee_fired(initiator_id integer, affected_id integer, reason_id integer) 
 LANGUAGE SQL AS $employee_fired$
 	UPDATE employees
@@ -49,7 +49,7 @@ $employee_fired$;
 
 
 
-// new departament
+-- new departament
 CREATE OR REPLACE PROCEDURE new_departament(initiator_id integer, name text, head_id integer, deputy_head_id integer) 
 LANGUAGE plpgsql AS $new_departament$
 BEGIN
@@ -102,35 +102,35 @@ LANGUAGE SQL AS $add_goal_type$
 	(name, description);
 	
 	INSERT INTO logs(type, initiator_id, affected_id) VALUES
-	(15, initianor_id, null);
+	(17, initianor_id, null);
 $add_goal_type$;
 
 -- add new goal
 CREATE OR REPLACE PROCEDURE add_goal(initiator_id integer, type integer, deadline date, employees_ids integer ARRAY) 
 AS $add_goal$
 	DECLARE inserted_id integer;
+	DECLARE employee_id integer;
 	BEGIN
 
 		INSERT INTO goals (type, deadline) VALUES
 		(type, deadline) RETURNING id INTO inserted_id;
 
 		INSERT INTO logs(type, initiator_id, affected_id) VALUES
-		(17, initiator_id, null);
+		(16, initiator_id, null);
 
-		
 		FOREACH employee_id in ARRAY employees_ids
 		LOOP
 			INSERT INTO employees_goals(goal_id, employee_id) VALUES
 			(inserted_id, employee_id);
 
 			INSERT INTO logs(type, initiator_id, affected_id) VALUES
-			(16, initiator_id, employee_id);
-		ENDLOOP
+			(15, initiator_id, employee_id);
+		END LOOP;
 	END;
 $add_goal$ LANGUAGE plpgsql;
 
 
-// trigger for activities from logs
+-- trigger for activities from logs
 CREATE OR REPLACE FUNCTION activities_from_logs() RETURNS trigger AS $activities_from_logs$
 	BEGIN
 		CASE NEW.type
@@ -168,7 +168,7 @@ FOR EACH ROW EXECUTE PROCEDURE activities_from_logs();
 
 
 
-// recalc points on activities tickets
+-- recalc points on activities tickets
 CREATE OR REPLACE FUNCTION recalc_points() RETURNS trigger AS $recalc_points$
 	BEGIN
 		UPDATE employees
@@ -184,7 +184,7 @@ FOR EACH ROW EXECUTE PROCEDURE recalc_points();
 
 
 
-// new activity for employee
+-- new activity for employee
 CREATE OR REPLACE PROCEDURE new_employee_activity(initiator_id integer, affected_id integer, activity_name text) 
 LANGUAGE plpgsql AS $new_employee_activity$
 BEGIN

@@ -6,6 +6,9 @@
 	{% if _user.id != user.id and user.access_level > _user.access_level and user.can_register_activities %}
 	<form id = "activity" method="post" action="{{ url_for('activity', id=_user.id) }}">
 		<select form="activity" name="activity_id" required>
+			{% for activity in activities %}
+			<option value="{{ activity[0] }}">{{ activity[1]}} = {{ activity[2]}} point(s) </option>
+			{% endfor %}
 			<option value = "Report">Report from the employee</option>
 			<option value = "New project feature">New project feature</option>
 			<option value = "New company feature">New feature in the company system</option>

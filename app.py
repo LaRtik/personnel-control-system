@@ -53,17 +53,17 @@ class User():
 		permissions = []
 		for i in bad_format:
 			permissions.append(i[0])
-		if 4 in permissions:
+		if 4 in permissions or self.access_level == 8:
 			self.can_promote = True
-		if 5 in permissions:
+		if 5 in permissions or self.access_level == 8:
 			self.can_hire = True
-		if 6 in permissions:
+		if 6 in permissions or self.access_level == 8:
 			self.can_fire = True
-		if 10 in permissions:
+		if 10 in permissions or self.access_level == 8:
 			self.can_register_activities = True
-		if 12 in permissions:
+		if 12 in permissions or self.access_level == 8:
 			self.can_create_departaments = True
-		if 13 in permissions:
+		if 13 in permissions or self.access_level == 8:
 			self.can_view_profiles = True
 	
 	def set_departament(self) -> None:
@@ -253,12 +253,24 @@ def goals():
 	if request.method == 'GET':
 		goals = db.get_goals()
 		types = db.get_goals_types()
-		return render_template("goals.html", user = current_user, goals=goals, types=types, users=users)
+		employees_goals = db.get_employees_goals()
+		employee_by_goals = defaultdict(list)
+		for goal, employee in employees_goals:
+			employee_by_goals[goal].append(employee)
+
+		return render_template("goals.html", user = current_user, goals=goals, types=types, employees_goals=employee_by_goals, users=users)
 	else:
-		print(request.form)
+		# print(request.form)
 		if request.form.get("goal_deadline"):
 			type_id = request.form.get('goal_type')
 			deadline = request.form.get('goal_deadline')
-			employees_ids = request.form.get('goal_employees')
+			employees_ids = request.form.getlist('goal_employees')
+			print(employees_ids)
 			db.add_goals(current_user.id, type_id, deadline, employees_ids)
-			return redirect(url_for('goals'))
+		
+		elif request.form.get("goal_type_name"):
+			name = request.form.get("goal_type_name")
+			description =  request.form.get("goal_type_descr")
+			db.add_goals_type(current_user.id, name, description)
+		
+		return redirect(url_for('goals'))

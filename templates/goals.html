@@ -14,6 +14,12 @@
         <td>{{ types[goal[1]][1] }}[{{ goal[1] }}]</td>
         <td>{{ goal[2] }}</td>
 	</tr>
+    {% for user in employees_goals[goal[0]] %}
+    <tr>
+        <td></td>
+        <td>- {{ users[user].name }} {{ users[user].surname }}[{{ user }}]</td>
+    </tr>
+    {% endfor %}
 {% endfor %}
 </table> 
 
